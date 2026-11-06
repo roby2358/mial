@@ -9,7 +9,7 @@ Why each current choice stands. Decisions are numbered permanently.
 - **Why:** G-5. The designer's direction: both earlier projects are source and inspiration, nothing is back-ported, and this is for the next application. It's what permits the stricter semantics below.
 
 ### D-2 A core language plus an opt-in host library — *Decided*
-- **Alternatives:** one flat set of built-ins; the original language only.
+- **Alternatives:** one flat set of built-ins; the base language only.
 - **Why:** G-4. Records, lists, numbers and text proved necessary in practice, but a host may want a smaller surface. Libraries also give hosts one way to add capability, the same way the shipped ones do.
 
 ### D-3 Four independent implementations; `js/` and `ts/` are separate hand-written copies — *Decided*
@@ -44,9 +44,9 @@ Why each current choice stands. Decisions are numbered permanently.
 - **Alternatives:** auto-call on reference (can't pass the function as a value; `mial-of` must become special); `f()` token (a new token rule, and the tree needs a marker beyond `{value, children}`).
 - **Why:** G-3. No new syntax or node shape, it round-trips, and it also reaches zero-arg `+`.
 
-### D-10 Code constants removed — *Decided*
-- **Alternatives:** keep the single-`mial`-child binding form.
-- **Why:** `mial-of` plus `call` cover it, with one definition rule fewer. A heading over `- mial` is now just a function returning the tree.
+### D-10 No code-constant definition form — *Decided*
+- **Alternatives:** a form that binds a heading directly to the tree under a single `mial` child.
+- **Why:** `mial-of` plus `call` cover it, with one definition rule fewer. A heading over `- mial` is just a function returning the tree.
 
 ### D-11 Explicit step and depth limits counted in MIAL terms — *Proposed, tuned by R-24, R-25*
 - **Alternatives:** catch host stack overflow (JS `RangeError`, Python `RecursionError`; Rust aborts the process, and every host would fail at a different depth).
@@ -60,7 +60,7 @@ Why each current choice stands. Decisions are numbered permanently.
 - **Why:** G-1. Available exactly in all hosts without dependencies.
 
 ### D-13 Lambda renders with the `*` spec — *Decided*
-- **Why:** G-3. Sibling bullets re-parse as a different function. Closures now render through their `lambda` form, so `print-mial` round-trips.
+- **Why:** G-3. Sibling bullets re-parse as a different function. Closures render through their `lambda` form, so `print-mial` round-trips.
 
 ### D-14 Diagnostic for discarded bare symbols after a spec — *Decided*
 - **Alternatives:** make sibling bullets a legal multi-param spec.
@@ -76,11 +76,11 @@ Why each current choice stands. Decisions are numbered permanently.
 
 ### D-17 `error?` is a special form — *Proposed*
 - **Alternatives:** leave it as a function; add `try`.
-- **Why:** as a function its argument's error propagates before the call, so it could never return true. Limit aborts stay uncatchable so a runaway can't swallow its own limit.
+- **Why:** as a function its argument's error propagates before the call, so it could never return true. As a special form it sees the error first. Limit aborts stay uncatchable so a runaway can't swallow its own limit.
 
 ### D-18 Truthiness ignores nothing but childless false, null, 0 — *Proposed*
 - **Alternatives:** check only the label, which makes a non-empty data list falsy.
-- **Why:** G-2. A non-empty list being falsy was an accident of the representation.
+- **Why:** G-2. A non-empty list being falsy would be an accident of the representation.
 
 ### D-19 Deep structural `eq` — *Proposed*
 - **Alternatives:** label comparison, which says `(1)` equals `(2)` because both lists have null labels.
@@ -88,7 +88,7 @@ Why each current choice stands. Decisions are numbered permanently.
 
 ### D-20 `cons x null` is `(x)`; `cdr` always returns a list — *Proposed*
 - **Alternatives:** `cons x null` is `(x null)`, and `cdr` returns a bare second child for two-child trees.
-- **Why:** both were leftovers of an earlier pair representation, and neither obeys the Lisp list laws the docs promise.
+- **Why:** those alternatives suit a pair representation, which MIAL doesn't have, and neither obeys the Lisp list laws.
 
 ### D-21 Source whitespace is space, tab and CR only — *Proposed*
 - **Why:** G-1. JS `trim`, Python `strip` and Rust `trim` disagree on Unicode whitespace.
@@ -101,7 +101,7 @@ Why each current choice stands. Decisions are numbered permanently.
 - **Evidence:** R-32 found two `serde_json` defaults that break this: inexact float parsing (fixed with `float_roundtrip`) and a 128-level depth limit (fixed with `unbounded_depth`).
 
 ### D-24 `run()` is only `call("main", [])` — *Proposed*
-- **Alternatives:** the original runner, which logged warnings and an end banner.
+- **Alternatives:** a runner that logs warnings and an end banner.
 - **Why:** banners belong to a UI. Hosts read `diagnostics` directly.
 
 ### D-25 `mial` uses its first child and ignores the rest — *Decided*
@@ -121,7 +121,7 @@ Why each current choice stands. Decisions are numbered permanently.
 
 - **Very deep data.** The depth limit bounds evaluation, not data. A `reduce` that nests lists tens of thousands deep can overflow rendering or (in Rust) dropping such a tree. Rust would abort the process. See the Status section of CRITERIA.
 - **Strings can't always render.** A string with a backtick or newline (from `text`) renders verbatim and won't re-parse, because literals have no escape syntax.
-- **Data lists don't round-trip through render.** Their children render as siblings by design; the original litmus output depends on it.
+- **Data lists don't round-trip through render.** Their children render as siblings by design (D-27), and the litmus program's output depends on it.
 
 ## Open questions
 

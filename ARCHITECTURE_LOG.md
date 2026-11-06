@@ -2,6 +2,11 @@
 
 Newest first.
 
+### 2026-11-06 — MIT license stated, repo pushed to GitHub, history moved out of current-state docs
+Pushed to `github.com/roby2358/mial`, under the MIT license already in `LICENSE` and the four manifests, and noted in the README. Package registries stay a non-goal (D-5). `pjpd/bak/` is ignored, since tracker backups aren't source.
+
+Reworded RATIONALE to describe the current state, moving the story here: non-empty lists were falsy because truthiness checked only a node's label (D-18). `cons x null` giving `(x null)`, and `cdr` returning a bare second child, were leftovers of an earlier pair representation (D-20). D-10's title changed from "Code constants removed" to "No code-constant definition form". ONTOLOGY now states the exact `lambda` and `mial-of` error text that R-10 and R-19 already test. The README no longer uses `../` paths, which mean nothing on GitHub. No behaviour changed.
+
 ### 2026-11-06 — Open questions settled; `mial` ignores extra children
 Q-1 settled by D-25: `mial` returns its first child and ignores the rest, replacing the "takes exactly one child" error. A childless `mial` is unchanged: it's a variable lookup and never reached that error, which R-8 now pins. Q-2 settled by D-26: no literal escape syntax for now. Q-3 settled by D-27: data lists keep rendering as siblings. R-8 updated, and the R-33 golden regenerated.
 

@@ -86,7 +86,11 @@ The Rust crate needs a C toolchain to build (`sudo apt install build-essential` 
 
 - [ONTOLOGY.md](ONTOLOGY.md): the language and interface, the implementation reference
 - [CRITERIA.md](CRITERIA.md): how we know it's correct
-- [RATIONALE.md](RATIONALE.md): why each choice, and what's still open
+- [RATIONALE.md](RATIONALE.md): why each choice, and known limitations
 - [ARCHITECTURE_LOG.md](ARCHITECTURE_LOG.md): how it changed
 
-MIAL grew out of `../yuwakisaweb/markdown_is_a_lisp` and `../buildlife/js/mial.js`, but it's a separate, forward-looking language and isn't compatible with programs written for them.
+MIAL grew out of `markdown_is_a_lisp` in yuwakisaweb and `js/mial.js` in BuildLife, but it's a separate, forward-looking language and isn't compatible with programs written for them.
+
+## License
+
+MIT. See [LICENSE](LICENSE).

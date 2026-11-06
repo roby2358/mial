@@ -194,7 +194,7 @@ evaluate(n, env):
 | `eval` x | Evaluates x, then evaluates the result. Trace `in eval` |
 | `if` c a b | Evaluates c (trace `in if condition`), then only the chosen branch. A missing branch is null |
 | `let` bindings body… | The first child's children are bindings `name` with one expression, evaluated in order in a new scope. A missing expression is null. A non-symbol name is an error. Trace `in let binding <name>` |
-| `lambda` spec body… | Closure over the current Env. The spec must be a parameter spec, or it is an error |
+| `lambda` spec body… | Closure over the current Env. The spec must be a parameter spec, or the error is `lambda: invalid parameter spec` |
 | `and` x… / `or` x… | Left to right, stopping at the first deciding value; returns a boolean [D] |
 | `call` f args… | Evaluates f, then args, and applies them. How zero-arg functions run, and how computed functions are called [D] |
 | `error?` x | Evaluates x and returns whether it is an error. Catches errors, never limit aborts [P] |
@@ -242,7 +242,7 @@ A body runs in order, stops at the first error (trace `in body`), and returns th
 | `tag` | Fixed(1) | The node's value as an atom |
 | `children` | Fixed(1) | Children as a list; none → null |
 | `make-mial` | Fixed(2) | A node from a tag and a list (or null). A string tag denotes a symbol |
-| `mial-of` | Fixed(1) | Closure → its code (no params: the body, or a list of bodies; params: a `lambda` form). Builtin → error. Anything else → itself |
+| `mial-of` | Fixed(1) | Closure → its code (no params: the body, or a list of bodies; params: a `lambda` form). Builtin → `mial-of: builtins have no MIAL source`. Anything else → itself |
 | `car` | Fixed(1) | First child; childless → `car: empty list` |
 | `cdr` | Fixed(1) | Rest of the children as a list. Null → null. Any other atom → error [P] |
 | `cons` | Variadic(1) | Folds right. The last arg is the tail: a list is prepended to, null is the empty list [P], and any other value becomes the final element |

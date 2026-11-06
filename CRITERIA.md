@@ -56,7 +56,7 @@ None. This is a library.
 
 ## Status
 
-**2026-11-05.** All rows are automated except R-35.
+**2026-11-06.** All rows are automated except R-35.
 
 - **Not yet covered:** R-35, deep-data safety. See Known limitations in RATIONALE.
 - **Manual only:** X-1, until a real application embeds it.
