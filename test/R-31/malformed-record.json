@@ -1,0 +1,7 @@
+{
+  "libraries": [],
+  "checks": [
+    { "call": "no-field-name", "args": [], "plain": "(record 1 2)" },
+    { "call": "no-value", "args": [], "plain": "(record a)" }
+  ]
+}

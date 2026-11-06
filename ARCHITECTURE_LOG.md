@@ -2,6 +2,17 @@
 
 Newest first.
 
+### 2026-11-06 — Code reviewed against ONTOLOGY; four divergences fixed
+**Records.** The code tested only for the value `record`, so `keys` on `` - record `1` `` built a string around a raw number in JS and crashed on `show`, while the other languages returned `"1"`. All four now test the ONTOLOGY shape, and anything else is a tree. This changes a pinned case: R-31 `q-record` read a valueless `- b` field as null, and now spells out `` - b `null` ``.
+
+**`put` on repeated keys.** JS, TS and Python replaced every match and Rust only the first. All now replace every match (D-28).
+
+**Non-finite numbers from hosts.** `num` accepted NaN and infinities, breaking the finite-numbers invariant: Rust panicked formatting one. It now returns an error node (D-30). Python's `from_plain` also let a non-string key through as a Value, and now raises.
+
+**`deserialize`.** Extra keys and lone surrogates gave different results by host, and are now malformed everywhere (D-29).
+
+Smaller alignments: Rust's `ctx.log_line` is now `ctx.log` as the interface states, JS `load` throws on a missing field instead of running with no limit, and a thrown non-`Error` in JS and TS reports its text rather than `undefined`. ONTOLOGY now states the `let` error text, `format` of a closure, `toPlain` of a builtin, the type-name of a fieldless Record and Rust's `EvalResult`, all already true of the code. The R-33 golden is unchanged.
+
 ### 2026-11-06 — MIT license stated, repo pushed to GitHub, history moved out of current-state docs
 Pushed to `github.com/roby2358/mial`, under the MIT license already in `LICENSE` and the four manifests, and noted in the README. Package registries stay a non-goal (D-5). `pjpd/bak/` is ignored, since tracker backups aren't source.
 

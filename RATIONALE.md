@@ -117,6 +117,18 @@ Why each current choice stands. Decisions are numbered permanently.
 - **Alternatives:** render `- `null`` with children, so they round-trip.
 - **Why:** the designer's call. Siblings are easier to read in prompts and output. See Known limitations for the cost.
 
+### D-28 `put` replaces every field with the key — *Proposed*
+- **Alternatives:** replace the first match only.
+- **Why:** a quoted Record can repeat a key. `get` reads the first and `toPlain` keeps the last, so replacing every match is the one choice that leaves them agreeing after a `put` (G-1).
+
+### D-29 `deserialize` accepts only the node shape — *Proposed*
+- **Alternatives:** ignore extra keys, as JSON readers tend to.
+- **Why:** an ignored key is a place hosts disagree. `NaN` parses only in Python, `1e999` fails only in Rust. Lone surrogates aren't code points and only Rust refuses them, so the others check. Rejecting all of it gives one outcome for any input (G-1, G-2). Key order and whitespace stay unchecked, because hosts' JSON readers already agree on them.
+
+### D-30 `num` of a non-finite number is an error node — *Proposed*
+- **Alternatives:** raise in the host; leave it to host authors.
+- **Why:** a host built-in computing `x * 2` shouldn't need its own check to keep the finite-numbers invariant (G-2). An error node reaches the program as an ordinary failure with a trace, the same as any other built-in failure.
+
 ## Known limitations
 
 - **Very deep data.** The depth limit bounds evaluation, not data. A `reduce` that nests lists tens of thousands deep can overflow rendering or (in Rust) dropping such a tree. Rust would abort the process. See the Status section of CRITERIA.

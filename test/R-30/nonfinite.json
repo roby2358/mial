@@ -1,0 +1,7 @@
+{
+  "libraries": ["test"],
+  "checks": [
+    { "call": "over", "args": [], "error": "num: non-finite number (in test-double ← in body ← in call to over)" },
+    { "call": "caught", "args": [], "value": "true" }
+  ]
+}

@@ -33,13 +33,13 @@ Run everything with `just test`. `js/test/script-tag.test.js` separately proves 
 | R-23 | `formatNumber` | ECMAScript text for integers, fractions, thresholds, `-0`, and extremes | automated |
 | R-24 | A loop against a small step limit | Exact error text at an exact step count; the count resets per call | automated |
 | R-25 | Recursion against the depth limit | Exact error text at an exact depth; `DEPTH_LIMIT` is reached before any host stack overflows, including the worst known call shape (`reduce` through `call`) | automated |
-| R-26 | `record`, `get`, `put`, `has?`, `keys` | Order kept, `put` replaces in place and doesn't mutate, null reads as empty, non-records error | automated |
+| R-26 | `record`, `get`, `put`, `has?`, `keys` | Order kept, `put` replaces every matching field in place and doesn't mutate, null reads as empty, non-records error, including a `record` tree whose children aren't fields | automated |
 | R-27 | `length`, `nth`, `append`, `map`, `filter`, `reduce` | Per the HOST table; errors in callbacks carry traces; non-functions and non-lists error | automated |
 | R-28 | `min`, `max`, `abs`, `floor`, `round`, `clamp` | Per the HOST table; `round` halves go up, including 0.49999999999999994 and negatives | automated |
 | R-29 | `str`, `text`, `join`, `length` on non-ASCII | Display rules; `text` expands lists; `join` null separator; 🫐 has length 1 | automated |
-| R-30 | Library opt-in and a custom library | Without `host`, its names are undefined; `test` built-ins work, and call back into MIAL and log | automated |
-| R-31 | `fromPlain`, `toPlain` | Objects, arrays, scalars round-trip; closure and tree forms per the rule | automated |
-| R-32 | `serialize`, `deserialize` | Byte-exact JSON across languages, including escapes, hard-to-round numbers and 300 levels of nesting; malformed input gives the one error text | automated |
+| R-30 | Library opt-in and a custom library | Without `host`, its names are undefined; `test` built-ins work, and call back into MIAL and log; a non-finite `num` from a built-in is an ordinary error | automated |
+| R-31 | `fromPlain`, `toPlain` | Objects, arrays, scalars round-trip; closure and tree forms per the rule; a malformed `record` is a tree | automated |
+| R-32 | `serialize`, `deserialize` | Byte-exact JSON across languages, including escapes, hard-to-round numbers and 300 levels of nesting; malformed input gives the one error text, including extra keys and lone surrogates | automated |
 | R-33 | Every built-in × every argument kind (generated) | All four languages agree on every combination, against a committed golden file from `just cc-matrix` | automated |
 | R-34 | `run` | Calls `# main`; missing main is the missing-definition error; constants return themselves | automated |
 | R-35 | A hostile deep-data program | Rendering or dropping very deep data never crashes the host | not yet covered |
@@ -60,4 +60,5 @@ None. This is a library.
 
 - **Not yet covered:** R-35, deep-data safety. See Known limitations in RATIONALE.
 - **Manual only:** X-1, until a real application embeds it.
+- **Host API only:** `js/test/host-api.test.js`, `ts/test/host-api.test.ts`, `python/tests/test_host_api.py` and a test in `rust/tests/conformance.rs` cover what the corpus can't feed in: a non-finite number in `num` and `fromPlain` (no Rust `fromPlain` case, as JSON has none), JS's required `load` fields, the text of a non-`Error` throw, and Python's non-string object keys.
 - **Partial coverage:** R-2 shows specific hostile inputs terminate, not all inputs. R-33 covers one- and two-argument calls with a fixed set of argument kinds, not three-argument built-ins beyond sample rows.

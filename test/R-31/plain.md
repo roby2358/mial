@@ -15,4 +15,4 @@
 - mial
   - record
     - a `1`
-    - b
+    - b `null`

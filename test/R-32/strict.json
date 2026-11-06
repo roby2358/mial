@@ -1,0 +1,14 @@
+{
+  "libraries": [],
+  "checks": [
+    { "deserialize": "{\"value\":1,\"children\":[],\"x\":2}", "error": "not a serialized node" },
+    { "deserialize": "{\"value\":1,\"children\":[],\"x\":NaN}", "error": "not a serialized node" },
+    { "deserialize": "{\"value\":1,\"children\":[],\"x\":1e999}", "error": "not a serialized node" },
+    { "deserialize": "{\"value\":{\"string\":\"a\",\"error\":\"b\"},\"children\":[]}", "error": "not a serialized node" },
+    { "deserialize": "{\"value\":{\"string\":\"a\",\"x\":1},\"children\":[]}", "error": "not a serialized node" },
+    { "deserialize": "{\"value\":{\"string\":\"\\ud800\"},\"children\":[]}", "error": "not a serialized node" },
+    { "deserialize": "{\"value\":{\"error\":\"\\udc00\"},\"children\":[]}", "error": "not a serialized node" },
+    { "deserialize": "{\"value\":\"\\ud800x\",\"children\":[]}", "error": "not a serialized node" },
+    { "deserialize": "{\"value\":{\"string\":\"\\ud83e\\udee0\"},\"children\":[]}", "value": "\"🫠\"" }
+  ]
+}

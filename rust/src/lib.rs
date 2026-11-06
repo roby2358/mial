@@ -96,7 +96,7 @@ pub fn str_node(text: &str) -> Node {
     atom(Value::Str(text.into()))
 }
 pub fn num(n: f64) -> Node {
-    atom(Value::Num(n))
+    if n.is_finite() { atom(Value::Num(n)) } else { make_error("num", "non-finite number") }
 }
 pub fn boolean(b: bool) -> Node {
     atom(Value::Bool(b))
@@ -139,8 +139,11 @@ impl Node {
     fn is_function(&self) -> bool {
         matches!(self.value, Value::Closure(_) | Value::Builtin(_)) && self.is_childless()
     }
+    fn is_field(&self) -> bool {
+        matches!(self.value, Value::Sym(_)) && self.children.len() == 1
+    }
     fn is_record(&self) -> bool {
-        matches!(&self.value, Value::Sym(s) if &**s == "record")
+        matches!(&self.value, Value::Sym(s) if &**s == "record") && self.children.iter().all(Node::is_field)
     }
     fn is_record_like(&self) -> bool {
         self.is_record() || self.is_null()
@@ -614,7 +617,7 @@ fn set_var(env: &Rc<Env>, name: Rc<str>, value: Node) {
 fn symbol_name(n: &Node) -> Rc<str> {
     match &n.value {
         Value::Sym(s) => s.clone(),
-        _ => unreachable!("is_param_spec guarantees symbols"),
+        _ => unreachable!("callers check the node is a symbol"),
     }
 }
 
@@ -820,7 +823,7 @@ pub fn load(source: &str, config: LoadConfig) -> Interpreter {
 }
 
 impl Interpreter {
-    pub fn log_line(&mut self, text: &str) {
+    pub fn log(&mut self, text: &str) {
         (self.log)(text);
     }
 
@@ -1042,12 +1045,12 @@ fn parse_mial(args: &[Node], _: &mut Interpreter) -> EvalResult {
 
 fn print(args: &[Node], ctx: &mut Interpreter) -> EvalResult {
     let out = args.iter().map(display).collect::<Vec<_>>().join(" ");
-    ctx.log_line(&out);
+    ctx.log(&out);
     Ok(str_node(&out))
 }
 
 fn print_mial(args: &[Node], ctx: &mut Interpreter) -> EvalResult {
-    ctx.log_line(&render(&args[0]));
+    ctx.log(&render(&args[0]));
     Ok(args[0].clone())
 }
 
@@ -1115,10 +1118,6 @@ fn find_field<'a>(r: &'a Node, key: &str) -> Option<&'a Node> {
     r.children.iter().find(|f| field_matches(f, key))
 }
 
-fn display_key(field: &Node) -> String {
-    display(&atom(field.value.clone()))
-}
-
 fn field_of(key: &str, value: Node) -> Node {
     symbol_tree(key, vec![value])
 }
@@ -1147,7 +1146,7 @@ fn get(args: &[Node], _: &mut Interpreter) -> EvalResult {
         Ok(key) => key,
         Err(result) => return result,
     };
-    Ok(find_field(&args[0], &key).and_then(|f| f.children.first().cloned()).unwrap_or_else(nil))
+    Ok(find_field(&args[0], &key).map_or_else(nil, |f| f.children[0].clone()))
 }
 
 fn put(args: &[Node], _: &mut Interpreter) -> EvalResult {
@@ -1156,10 +1155,11 @@ fn put(args: &[Node], _: &mut Interpreter) -> EvalResult {
         Err(result) => return result,
     };
     let updated = field_of(&key, args[2].clone());
-    let mut fields = args[0].children.as_ref().clone();
-    match fields.iter().position(|f| field_matches(f, &key)) {
-        Some(at) => fields[at] = updated,
-        None => fields.push(updated),
+    let found = find_field(&args[0], &key).is_some();
+    let mut fields: Vec<Node> =
+        args[0].children.iter().map(|f| if field_matches(f, &key) { updated.clone() } else { f.clone() }).collect();
+    if !found {
+        fields.push(updated);
     }
     Ok(symbol_tree("record", fields))
 }
@@ -1176,7 +1176,7 @@ fn keys(args: &[Node], _: &mut Interpreter) -> EvalResult {
     if !r.is_record_like() {
         return expected("keys", "record", r);
     }
-    Ok(list_or_nil(r.children.iter().map(|f| str_node(&display_key(f))).collect()))
+    Ok(list_or_nil(r.children.iter().map(|f| str_node(&symbol_name(f))).collect()))
 }
 
 fn list_or_nil(items: Vec<Node>) -> Node {
@@ -1355,7 +1355,7 @@ pub fn to_plain(n: &Node) -> Json {
     if n.is_record() {
         let mut fields = Map::new();
         for f in n.children.iter() {
-            fields.insert(display_key(f), f.children.first().map_or(Json::Null, to_plain));
+            fields.insert(symbol_name(f).to_string(), to_plain(&f.children[0]));
         }
         return Json::Object(fields);
     }
@@ -1406,17 +1406,17 @@ fn decode_value(v: &Json) -> Option<Value> {
         Json::Bool(b) => Some(Value::Bool(*b)),
         Json::Number(n) => n.as_f64().filter(|x| x.is_finite()).map(Value::Num),
         Json::String(s) => Some(Value::Sym(s.as_str().into())),
-        Json::Object(fields) => match (fields.get("string"), fields.get("error")) {
+        Json::Object(fields) if fields.len() == 1 => match (fields.get("string"), fields.get("error")) {
             (Some(Json::String(s)), _) => Some(Value::Str(s.as_str().into())),
             (_, Some(Json::String(m))) => Some(Value::Err(m.as_str().into())),
             _ => None,
         },
-        Json::Array(_) => None,
+        Json::Object(_) | Json::Array(_) => None,
     }
 }
 
 fn decode_node(data: &Json) -> Option<Node> {
-    let fields = data.as_object()?;
+    let fields = data.as_object().filter(|fields| fields.len() == 2)?;
     let children = fields.get("children")?.as_array()?;
     let value = decode_value(fields.get("value")?)?;
     let decoded: Option<Vec<Node>> = children.iter().map(decode_node).collect();

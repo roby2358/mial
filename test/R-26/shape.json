@@ -1,0 +1,9 @@
+{
+  "libraries": ["host"],
+  "checks": [
+    { "call": "keys-bad", "args": [], "error": "keys: expected record, got tree (in keys ← in body ← in call to keys-bad)" },
+    { "call": "get-bad", "args": [], "error": "get: expected record, got tree (in get ← in body ← in call to get-bad)" },
+    { "call": "has-bad", "args": [], "error": "has?: expected record, got tree (in has? ← in body ← in call to has-bad)" },
+    { "call": "put-bad", "args": [], "error": "put: expected record, got tree (in put ← in body ← in call to put-bad)" }
+  ]
+}

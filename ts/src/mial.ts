@@ -43,7 +43,7 @@ export const node = (value: Value, children: Node[]): Node => ({ value, children
 const atom = (value: Value): Node => node(value, []);
 export const sym = (name: string): Node => atom(name);
 export const str = (text: string): Node => atom(new Str(text));
-export const num = (n: number): Node => atom(n);
+export const num = (n: number): Node => (Number.isFinite(n) ? atom(n) : makeError('num', 'non-finite number'));
 export const bool = (b: boolean): Node => atom(b);
 export const nil = (): Node => atom(null);
 export const list = (items: Node[]): Node => node(null, items);
@@ -58,7 +58,8 @@ const isNumber = (n: Node): boolean => typeof n.value === 'number' && isChildles
 const isString = (n: Node): boolean => n.value instanceof Str && isChildless(n);
 const isSymbol = (n: Node): boolean => isSymbolValue(n.value) && isChildless(n);
 const isFunction = (n: Node): boolean => isFunctionValue(n.value) && isChildless(n);
-const isRecord = (n: Node): boolean => n.value === 'record';
+const isField = (f: Node): boolean => isSymbolValue(f.value) && f.children.length === 1;
+const isRecord = (n: Node): boolean => n.value === 'record' && n.children.every(isField);
 const numberOf = (n: Node): number => n.value as number;
 const textOf = (n: Node): string => (n.value as Str).text;
 export const isTruthy = (n: Node): boolean => !(isChildless(n) && (n.value === false || n.value === null || n.value === 0));
@@ -523,7 +524,7 @@ export class Interpreter implements Context {
   run(): CallResult { return this.call('main', []); }
 
   private abortText(e: unknown, name: string): string {
-    if (!(e instanceof Abort)) return `"# ${name}" crashed: ${(e as Error).message}`;
+    if (!(e instanceof Abort)) return `"# ${name}" crashed: ${e instanceof Error ? e.message : String(e)}`;
     return e.kind === 'steps'
       ? `"# ${name}" exceeded the step budget of ${this.stepLimit} evaluations`
       : `"# ${name}" recursed too deeply (depth limit ${this.depthLimit})`;
@@ -649,7 +650,6 @@ export const CORE: Library = library([
 const isKey = (n: Node): boolean => isString(n) || isSymbol(n);
 const keyText = (n: Node): string => (n.value instanceof Str ? n.value.text : n.value as string);
 const isRecordLike = (n: Node): boolean => isRecord(n) || isNull(n);
-const displayKey = (field: Node): string => display(atom(field.value));
 
 const findField = (r: Node, key: string): Node | undefined => r.children.find((f) => f.value === key);
 
@@ -666,7 +666,7 @@ const getBuiltin = builtin('get', fixed(2), ([r, k]) => {
   if (!isRecordLike(r)) return expected('get', 'record', r);
   if (!isKey(k)) return expected('get', 'key', k);
   const f = findField(r, keyText(k));
-  return f && f.children.length > 0 ? f.children[0] : nil();
+  return f ? f.children[0] : nil();
 });
 
 const putBuiltin = builtin('put', fixed(3), ([r, k, v]) => {
@@ -688,7 +688,7 @@ const hasBuiltin = builtin('has?', fixed(2), ([r, k]) => {
 
 const keysBuiltin = builtin('keys', fixed(1), ([r]) => {
   if (!isRecordLike(r)) return expected('keys', 'record', r);
-  return r.children.length === 0 ? nil() : list(r.children.map((f) => str(displayKey(f))));
+  return r.children.length === 0 ? nil() : list(r.children.map((f) => str(f.value as string)));
 });
 
 const lengthBuiltin = builtin('length', fixed(1), ([x]) => {
@@ -805,7 +805,7 @@ export const fromPlain = (data: Plain): Node => {
 
 export const toPlain = (n: Node): Plain => {
   if (isRecord(n)) {
-    return Object.fromEntries(n.children.map((f) => [displayKey(f), f.children.length > 0 ? toPlain(f.children[0]) : null]));
+    return Object.fromEntries(n.children.map((f) => [f.value as string, toPlain(f.children[0])]));
   }
   if (n.value === null) return isChildless(n) ? null : n.children.map(toPlain);
   if (!isChildless(n)) return show(n);
@@ -828,20 +828,24 @@ const serializeValue = (v: Value): string => {
 
 export const serialize = (n: Node): string => `{"value":${serializeValue(n.value)},"children":[${n.children.map(serialize).join(',')}]}`;
 
+// A lone surrogate is not a code point (Value), so it can't be text.
+const isWellFormed = (s: string): boolean => !/[\uD800-\uDFFF]/u.test(s);
+
 const decodeValue = (v: unknown): Value | undefined => {
-  if (v === null || typeof v === 'boolean' || typeof v === 'string') return v;
+  if (v === null || typeof v === 'boolean') return v;
+  if (typeof v === 'string') return isWellFormed(v) ? v : undefined;
   if (typeof v === 'number') return Number.isFinite(v) ? v : undefined;
-  if (typeof v !== 'object' || Array.isArray(v)) return undefined;
+  if (typeof v !== 'object' || Array.isArray(v) || Object.keys(v as object).length !== 1) return undefined;
   const o = v as { string?: unknown; error?: unknown };
-  if (typeof o.string === 'string') return new Str(o.string);
-  if (typeof o.error === 'string') return new Err(o.error);
+  if (typeof o.string === 'string' && isWellFormed(o.string)) return new Str(o.string);
+  if (typeof o.error === 'string' && isWellFormed(o.error)) return new Err(o.error);
   return undefined;
 };
 
 const decodeNode = (data: unknown): Node | null => {
   if (typeof data !== 'object' || data === null) return null;
   const o = data as { value?: unknown; children?: unknown };
-  if (!Array.isArray(o.children)) return null;
+  if (Object.keys(o).length !== 2 || !Array.isArray(o.children)) return null;
   const value = decodeValue(o.value);
   if (value === undefined) return null;
   const children = o.children.map(decodeNode);

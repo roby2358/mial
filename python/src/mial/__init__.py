@@ -99,7 +99,8 @@ def str_node(text: str) -> Node:
 
 
 def num(n: float) -> Node:
-    return _atom(float(n))
+    x = float(n)
+    return _atom(x) if math.isfinite(x) else make_error("num", "non-finite number")
 
 
 def bool_node(b: bool) -> Node:
@@ -162,8 +163,12 @@ def _is_function(n: Node) -> bool:
     return _is_function_value(n.value) and _childless(n)
 
 
+def _is_field(f: Node) -> bool:
+    return _is_symbol_value(f.value) and len(f.children) == 1
+
+
 def _is_record(n: Node) -> bool:
-    return n.value == "record"
+    return n.value == "record" and all(_is_field(f) for f in n.children)
 
 
 def is_truthy(n: Node) -> bool:
@@ -953,12 +958,8 @@ def _is_record_like(n: Node) -> bool:
     return _is_record(n) or _is_null(n)
 
 
-def _display_key(field: Node) -> str:
-    return display(_atom(field.value))
-
-
 def _find_field(r: Node, key: str) -> Node | None:
-    return next((f for f in r.children if isinstance(f.value, str) and f.value == key), None)
+    return next((f for f in r.children if f.value == key), None)
 
 
 def _record(args: list[Node], ctx: Any) -> Node:
@@ -977,7 +978,7 @@ def _get(args: list[Node], ctx: Any) -> Node:
     if not _is_key(k):
         return _expected("get", "key", k)
     f = _find_field(r, _key_text(k))
-    return f.children[0] if f is not None and f.children else nil()
+    return f.children[0] if f is not None else nil()
 
 
 def _put(args: list[Node], ctx: Any) -> Node:
@@ -990,7 +991,7 @@ def _put(args: list[Node], ctx: Any) -> Node:
     updated = Node(key, [v])
     if _find_field(r, key) is None:
         return Node("record", [*r.children, updated])
-    return Node("record", [updated if isinstance(f.value, str) and f.value == key else f for f in r.children])
+    return Node("record", [updated if f.value == key else f for f in r.children])
 
 
 def _has(args: list[Node], ctx: Any) -> Node:
@@ -1006,7 +1007,7 @@ def _keys(args: list[Node], ctx: Any) -> Node:
     r = args[0]
     if not _is_record_like(r):
         return _expected("keys", "record", r)
-    return list_node([str_node(_display_key(f)) for f in r.children]) if r.children else nil()
+    return list_node([str_node(f.value) for f in r.children]) if r.children else nil()
 
 
 def _length(args: list[Node], ctx: Any) -> Node:
@@ -1160,12 +1161,14 @@ def from_plain(data: Any) -> Node:
         return num(data)
     if isinstance(data, list):
         return list_node([from_plain(x) for x in data]) if data else nil()
+    if not all(isinstance(k, str) for k in data):
+        raise TypeError("from_plain: object keys must be strings")
     return Node("record", [Node(k, [from_plain(v)]) for k, v in data.items()])
 
 
 def to_plain(n: Node) -> Any:
     if _is_record(n):
-        return {_display_key(f): to_plain(f.children[0]) if f.children else None for f in n.children}
+        return {f.value: to_plain(f.children[0]) for f in n.children}
     if n.value is None:
         return [to_plain(c) for c in n.children] if n.children else None
     if not _childless(n):
@@ -1206,23 +1209,36 @@ class _NotANode(Exception):
     pass
 
 
+def _is_well_formed(s: str) -> bool:
+    """A lone surrogate is not a code point (Value), so it can't be text."""
+    return not any("\ud800" <= c <= "\udfff" for c in s)
+
+
+def _decode_text(s: Any) -> str:
+    if not isinstance(s, str) or not _is_well_formed(s):
+        raise _NotANode
+    return s
+
+
 def _decode_value(v: Any) -> Any:
-    if v is None or isinstance(v, (bool, str)):
+    if v is None or isinstance(v, bool):
         return v
+    if isinstance(v, str):
+        return _decode_text(v)
     if isinstance(v, (int, float)):
         if not math.isfinite(v):
             raise _NotANode
         return float(v)
-    if isinstance(v, dict):
-        if isinstance(v.get("string"), str):
-            return Str(v["string"])
-        if isinstance(v.get("error"), str):
-            return Err(v["error"])
+    if isinstance(v, dict) and len(v) == 1:
+        if "string" in v:
+            return Str(_decode_text(v["string"]))
+        if "error" in v:
+            return Err(_decode_text(v["error"]))
     raise _NotANode
 
 
 def _decode_node(data: Any) -> Node:
-    if not isinstance(data, dict) or "value" not in data or not isinstance(data.get("children"), list):
+    if not isinstance(data, dict) or len(data) != 2 or "value" not in data or not isinstance(data.get("children"), list):
         raise _NotANode
     return Node(_decode_value(data["value"]), [_decode_node(c) for c in data["children"]])
 

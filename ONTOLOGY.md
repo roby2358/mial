@@ -64,7 +64,7 @@ MIAL (MarkdownIsALisp) is a homoiconic language whose syntax is Markdown: headin
 |---|---|---|
 | empty list | null value, no children | `null` |
 | data list | null value, 1+ children | `list` |
-| Record | symbol value `record`; each child is `key` (symbol) with one child, the field's value | `tree` |
+| Record | symbol value `record`; each child is `key` (symbol) with exactly one child, the field's value. A node with any other child isn't a Record | `tree`, or `symbol` with no fields |
 | tree | any other value with 1+ children | `tree` |
 | atom | any other childless node | `number`, `boolean`, `string`, `symbol`, `function` (closure or builtin), `error` |
 
@@ -193,7 +193,7 @@ evaluate(n, env):
 | `mial` x | Returns x unevaluated. Extra children are ignored, with no diagnostic [D] |
 | `eval` x | Evaluates x, then evaluates the result. Trace `in eval` |
 | `if` c a b | Evaluates c (trace `in if condition`), then only the chosen branch. A missing branch is null |
-| `let` bindings body… | The first child's children are bindings `name` with one expression, evaluated in order in a new scope. A missing expression is null. A non-symbol name is an error. Trace `in let binding <name>` |
+| `let` bindings body… | The first child's children are bindings `name` with one expression, evaluated in order in a new scope. A missing expression is null. A non-symbol name is `let: binding <format(value)> must be a symbol`. Trace `in let binding <name>` |
 | `lambda` spec body… | Closure over the current Env. The spec must be a parameter spec, or the error is `lambda: invalid parameter spec` |
 | `and` x… / `or` x… | Left to right, stopping at the first deciding value; returns a boolean [D] |
 | `call` f args… | Evaluates f, then args, and applies them. How zero-arg functions run, and how computed functions are called [D] |
@@ -260,9 +260,9 @@ Any arithmetic result that isn't finite is `<name>: non-finite result`. Applies 
 |---|---|---|
 | `record` | Variadic(0) | Key/value pairs. A missing final value is null |
 | `get` | Fixed(2) | The field's value, or null. A non-record is an error |
-| `put` | Fixed(3) | New Record. Replaces in place, otherwise appends. A non-record is an error |
+| `put` | Fixed(3) | New Record. Replaces every field with that key in place, otherwise appends [P]. A non-record is an error |
 | `has?` | Fixed(2) | Whether the field exists |
-| `keys` | Fixed(1) | Field names as a list of strings |
+| `keys` | Fixed(1) | Field names as a list of strings. A non-record is an error |
 | `length` | Fixed(1) | Code points of a string, or items of a list. Others are an error [D] |
 | `nth` | Fixed(2) | The item, or null when out of range or non-integer. A non-number index is an error |
 | `append` | Variadic(0) | Concatenates lists. A non-list is an error |
@@ -283,7 +283,7 @@ Any arithmetic result that isn't finite is `<name>: non-finite result`. Applies 
 *Serves:* G-3. Node → Markdown, using `- ` bullets and 2 spaces per level.
 
 ```
-format(value): null/number/boolean in backticks; string `"s"`; error `ERROR: m`; symbol/builtin bare
+format(value): null/number/boolean in backticks; string `"s"`; error `ERROR: m`; symbol/builtin bare; closure <lambda>
 closure        → render its lambda form: lambda, then spec, then body [D]
 data list      → children as sibling bullets at this indent
 atom           → "- format(value)"
@@ -297,10 +297,10 @@ A zero-param closure's spec is `*`. Programs render as `# name` then bullets, wi
 *Serves:* G-1. One-line canonical text used by the shared tests and for debugging. Atoms: number text, `true`, `null`, `"escaped"` (escaping `\` `"` newline, CR, tab), symbol or builtin name, `<lambda>`, `<error: m>`. Compound: `(head child child)`, for example `(null 1 2)`.
 
 ### 4.12 Serialize [D]
-*Serves:* G-4. Saved state moves between languages byte for byte. Canonical JSON with no whitespace and fixed key order: `{"value":V,"children":[...]}`. V: number via `formatNumber`, `true`/`false`, `null`, a JSON string for a symbol, `{"string":s}`, `{"error":m}`. A closure saves as the string `<lambda>` (its environment doesn't serialize) and a builtin as a symbol of its name. Strings use minimal JSON escaping with non-ASCII raw. `deserialize` returns a CallResult; malformed input of any kind is `not a serialized node`.
+*Serves:* G-4. Saved state moves between languages byte for byte. Canonical JSON with no whitespace and fixed key order: `{"value":V,"children":[...]}`. V: number via `formatNumber`, `true`/`false`, `null`, a JSON string for a symbol, `{"string":s}`, `{"error":m}`. A closure saves as the string `<lambda>` (its environment doesn't serialize) and a builtin as a symbol of its name. Strings use minimal JSON escaping with non-ASCII raw. `deserialize` returns a CallResult; malformed input of any kind is `not a serialized node`. A node must have exactly the keys `value` and `children`, an object V exactly one key, and text must not contain a lone surrogate [P]. Key order and JSON whitespace aren't checked.
 
 ### 4.13 Plain data [P]
-*Serves:* G-4. `fromPlain`: JSON-like host data to nodes (object → Record, array → list). `toPlain`: back. Record → object, list → array, empty list → null, string or symbol → text, number and boolean as themselves, closure → `<lambda>`, error → `{error: message}`, other tree → its `show` text.
+*Serves:* G-4. `fromPlain`: JSON-like host data to nodes (object → Record, array → list). `toPlain`: back. Record → object, list → array, empty list → null, string or symbol → text, number and boolean as themselves, closure → `<lambda>`, builtin → its name, error → `{error: message}`, other tree → its `show` text. A non-finite number in `fromPlain` becomes the `num` error below. JS objects list integer-like keys first, so their field order is the host's [P].
 
 ### 4.14 Limits [D]
 *Serves:* G-1, G-2. Aborts unwind straight to the top-level `call` and can't be caught by `error?`.
@@ -356,9 +356,9 @@ Names are shown in JS/TS spelling. Rust and Python use `snake_case`. Where a nam
 
 | Name | Purpose |
 |---|---|
-| `node(value, children)`, `sym`, `str`, `num`, `bool`, `nil`, `list(items)`, `makeError(symbol, reason)` | Node construction |
+| `node(value, children)`, `sym`, `str`, `num`, `bool`, `nil`, `list(items)`, `makeError(symbol, reason)` | Node construction. `num` of a non-finite number returns the error `num: non-finite number` [P] |
 | `fixed(n)`, `variadic(min)` | Arity |
-| `builtin(name, arity, fn)` | `fn(args, ctx)` returns a Node. `ctx.apply(proc, args, name)` calls back into MIAL. `ctx.log(text)` logs |
+| `builtin(name, arity, fn)` | `fn(args, ctx)` returns a Node (in Rust, `EvalResult`, so a limit abort from `ctx.apply` can pass through with `?`). `ctx.apply(proc, args, name)` calls back into MIAL. `ctx.log(text)` logs |
 | `library(builtins)` | A Library from a list of builtins (a plain list in Rust) |
 | `CORE`, `HOST` | The shipped libraries |
 | `STEP_LIMIT`, `DEPTH_LIMIT` | Recommended limits |

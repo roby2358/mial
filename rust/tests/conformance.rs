@@ -18,7 +18,7 @@ fn test_library() -> m::Library {
         }),
         m::builtin("test-apply", m::fixed(2), |a, ctx| ctx.apply(&a[0], &a[1..2], "test-apply")),
         m::builtin("test-log", m::fixed(1), |a, ctx| {
-            ctx.log_line(&m::display(&a[0]));
+            ctx.log(&m::display(&a[0]));
             Ok(a[0].clone())
         }),
     ]
@@ -174,4 +174,11 @@ fn shared_corpus() {
         .collect();
     println!("{} cases, {} failed", files.len(), failures.len());
     assert!(failures.is_empty(), "\n{}", failures.join("\n"));
+}
+
+#[test]
+fn num_turns_a_non_finite_number_into_an_error() {
+    for n in [f64::NAN, f64::INFINITY, f64::NEG_INFINITY] {
+        assert_eq!(m::show(&m::num(n)), "<error: num: non-finite number>");
+    }
 }

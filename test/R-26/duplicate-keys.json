@@ -1,0 +1,7 @@
+{
+  "libraries": ["host"],
+  "checks": [
+    { "call": "read", "args": [], "value": "1" },
+    { "call": "replaced", "args": [], "value": "(record (a 9) (b 2) (a 9))" }
+  ]
+}

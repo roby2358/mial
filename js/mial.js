@@ -22,7 +22,7 @@
   const atom = (value) => node(value, []);
   const sym = (name) => atom(name);
   const str = (text) => atom(new Str(text));
-  const num = (n) => atom(n);
+  const num = (n) => (Number.isFinite(n) ? atom(n) : makeError('num', 'non-finite number'));
   const bool = (b) => atom(b);
   const nil = () => atom(null);
   const list = (items) => node(null, items);
@@ -37,7 +37,8 @@
   const isString = (n) => n.value instanceof Str && isChildless(n);
   const isSymbol = (n) => isSymbolValue(n.value) && isChildless(n);
   const isFunction = (n) => isFunctionValue(n.value) && isChildless(n);
-  const isRecord = (n) => n.value === 'record';
+  const isField = (f) => isSymbolValue(f.value) && f.children.length === 1;
+  const isRecord = (n) => n.value === 'record' && n.children.every(isField);
   const isTruthy = (n) => !(isChildless(n) && (n.value === false || n.value === null || n.value === 0));
 
   const ATOM_TYPE_NAMES = [
@@ -474,7 +475,7 @@
     run() { return this.call('main', []); }
 
     abortText(e, name) {
-      if (!(e instanceof Abort)) return `"# ${name}" crashed: ${e.message}`;
+      if (!(e instanceof Abort)) return `"# ${name}" crashed: ${e instanceof Error ? e.message : String(e)}`;
       return e.kind === 'steps'
         ? `"# ${name}" exceeded the step budget of ${this.stepLimit} evaluations`
         : `"# ${name}" recursed too deeply (depth limit ${this.depthLimit})`;
@@ -485,7 +486,13 @@
     ? `${n.value.message} (${n.children.map(display).join(' ← ')})`
     : n.value.message);
 
-  const load = (source, config) => new Interpreter(source, config);
+  const REQUIRED_CONFIG = ['libraries', 'log', 'stepLimit', 'depthLimit'];
+
+  const load = (source, config) => {
+    const missing = REQUIRED_CONFIG.find((field) => config[field] === undefined);
+    if (missing) throw new TypeError(`load: ${missing} is required`);
+    return new Interpreter(source, config);
+  };
 
   /* ---------------------------------------------------------------- Core library */
 
@@ -620,7 +627,7 @@
     if (!isRecordLike(r)) return expected('get', 'record', r);
     if (!isKey(k)) return expected('get', 'key', k);
     const f = findField(r, keyText(k));
-    return f && f.children.length > 0 ? f.children[0] : nil();
+    return f ? f.children[0] : nil();
   });
 
   const putBuiltin = builtin('put', fixed(3), ([r, k, v]) => {
@@ -759,7 +766,7 @@
 
   const toPlain = (n) => {
     if (isRecord(n)) {
-      return Object.fromEntries(n.children.map((f) => [displayKey(f), f.children.length > 0 ? toPlain(f.children[0]) : null]));
+      return Object.fromEntries(n.children.map((f) => [f.value, toPlain(f.children[0])]));
     }
     if (n.value === null) return isChildless(n) ? null : n.children.map(toPlain);
     if (!isChildless(n)) return show(n);
@@ -767,8 +774,6 @@
     if (v instanceof Err) return { error: v.message };
     return typeof v === 'number' || typeof v === 'boolean' ? v : display(n);
   };
-
-  const displayKey = (field) => display(atom(field.value));
 
   /* ---------------------------------------------------------------- Serialize */
 
@@ -784,17 +789,21 @@
 
   const serialize = (n) => `{"value":${serializeValue(n.value)},"children":[${n.children.map(serialize).join(',')}]}`;
 
+  // A lone surrogate is not a code point (Value), so it can't be text.
+  const isWellFormed = (s) => !/[\uD800-\uDFFF]/u.test(s);
+
   const decodeValue = (v) => {
-    if (v === null || typeof v === 'boolean' || typeof v === 'string') return v;
+    if (v === null || typeof v === 'boolean') return v;
+    if (typeof v === 'string') return isWellFormed(v) ? v : undefined;
     if (typeof v === 'number') return Number.isFinite(v) ? v : undefined;
-    if (typeof v !== 'object' || Array.isArray(v)) return undefined;
-    if (typeof v.string === 'string') return new Str(v.string);
-    if (typeof v.error === 'string') return new Err(v.error);
+    if (typeof v !== 'object' || Array.isArray(v) || Object.keys(v).length !== 1) return undefined;
+    if (typeof v.string === 'string' && isWellFormed(v.string)) return new Str(v.string);
+    if (typeof v.error === 'string' && isWellFormed(v.error)) return new Err(v.error);
     return undefined;
   };
 
   const decodeNode = (data) => {
-    if (typeof data !== 'object' || data === null || !Array.isArray(data.children)) return null;
+    if (typeof data !== 'object' || data === null || Object.keys(data).length !== 2 || !Array.isArray(data.children)) return null;
     const value = decodeValue(data.value);
     if (value === undefined) return null;
     const children = data.children.map(decodeNode);
