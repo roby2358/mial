@@ -1,0 +1,208 @@
+{
+  "libraries": [],
+  "checks": [
+    {
+      "call": "lt",
+      "args": [
+        1,
+        2
+      ],
+      "value": "true"
+    },
+    {
+      "call": "lt",
+      "args": [
+        2,
+        2
+      ],
+      "value": "false"
+    },
+    {
+      "call": "le",
+      "args": [
+        2,
+        2
+      ],
+      "value": "true"
+    },
+    {
+      "call": "gt",
+      "args": [
+        3,
+        2
+      ],
+      "value": "true"
+    },
+    {
+      "call": "ge",
+      "args": [
+        2,
+        2
+      ],
+      "value": "true"
+    },
+    {
+      "call": "ge",
+      "args": [
+        1,
+        2
+      ],
+      "value": "false"
+    },
+    {
+      "call": "eq2",
+      "args": [
+        1,
+        1
+      ],
+      "value": "true"
+    },
+    {
+      "call": "eq2",
+      "args": [
+        1,
+        2
+      ],
+      "value": "false"
+    },
+    {
+      "call": "eq2",
+      "args": [
+        "a",
+        "a"
+      ],
+      "value": "true"
+    },
+    {
+      "call": "eq2",
+      "args": [
+        "1",
+        1
+      ],
+      "value": "false"
+    },
+    {
+      "call": "eq2",
+      "args": [
+        null,
+        0
+      ],
+      "value": "false"
+    },
+    {
+      "call": "eq2",
+      "args": [
+        null,
+        null
+      ],
+      "value": "true"
+    },
+    {
+      "call": "eq2",
+      "args": [
+        false,
+        null
+      ],
+      "value": "false"
+    },
+    {
+      "call": "eq2",
+      "args": [
+        {
+          "a": [
+            1,
+            "x"
+          ]
+        },
+        {
+          "a": [
+            1,
+            "x"
+          ]
+        }
+      ],
+      "value": "true"
+    },
+    {
+      "call": "ne2",
+      "args": [
+        1,
+        null
+      ],
+      "value": "true"
+    },
+    {
+      "call": "ne2",
+      "args": [
+        "a",
+        "a"
+      ],
+      "value": "false"
+    },
+    {
+      "call": "str-str",
+      "args": [],
+      "error": "<=: expected number, got string (in <= ← in body ← in call to str-str)"
+    },
+    {
+      "call": "gt-null",
+      "args": [],
+      "error": ">: expected number, got null (in > ← in body ← in call to gt-null)"
+    },
+    {
+      "call": "sym-str",
+      "args": [],
+      "value": "false"
+    },
+    {
+      "call": "sym-sym",
+      "args": [],
+      "value": "true"
+    },
+    {
+      "call": "deep",
+      "args": [],
+      "value": "true"
+    },
+    {
+      "call": "deep-diff",
+      "args": [],
+      "value": "false"
+    },
+    {
+      "call": "tree-label",
+      "args": [],
+      "value": "false"
+    },
+    {
+      "call": "zero-negzero",
+      "args": [],
+      "value": "true"
+    },
+    {
+      "call": "same-fn",
+      "args": [],
+      "value": "true"
+    },
+    {
+      "call": "diff-fn",
+      "args": [],
+      "value": "false"
+    },
+    {
+      "call": "same-builtin",
+      "args": [],
+      "value": "true"
+    },
+    {
+      "call": "diff-builtin",
+      "args": [],
+      "value": "true"
+    },
+    {
+      "call": "null-empty",
+      "args": [],
+      "value": "true"
+    }
+  ]
+}

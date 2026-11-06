@@ -1,0 +1,72 @@
+{
+  "libraries": [],
+  "checks": [
+    {
+      "call": "k",
+      "args": [],
+      "value": "5"
+    },
+    {
+      "call": "s",
+      "args": [],
+      "value": "\"x\""
+    },
+    {
+      "call": "k",
+      "args": [
+        1
+      ],
+      "error": "\"# k\" is not a function"
+    },
+    {
+      "call": "one",
+      "args": [
+        1
+      ],
+      "value": "2"
+    },
+    {
+      "call": "two",
+      "args": [
+        3,
+        4
+      ],
+      "value": "7"
+    },
+    {
+      "call": "zero-spec",
+      "args": [],
+      "value": "7"
+    },
+    {
+      "call": "stmts",
+      "args": [],
+      "value": "20"
+    },
+    {
+      "call": "quoted",
+      "args": [],
+      "value": "(+ 1 2)"
+    },
+    {
+      "call": "lit-body",
+      "args": [],
+      "value": "2"
+    },
+    {
+      "call": "sole",
+      "args": [],
+      "error": "foo: undefined symbol (in body ← in call to sole)"
+    },
+    {
+      "call": "use-not",
+      "args": [],
+      "value": "1"
+    },
+    {
+      "call": "nosuch",
+      "args": [],
+      "error": "missing definition \"# nosuch\""
+    }
+  ]
+}

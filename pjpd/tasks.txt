@@ -1,0 +1,7 @@
+Priority:   50
+Status: ToDo
+ID: deepdata-99km
+Created: 2026-11-06T00:12:13Z
+Updated: 2026-11-06T00:12:13Z
+
+MIAL R-35: make very deep data safe in all four libraries. The depth limit bounds evaluation, not data, so a `reduce` that nests lists tens of thousands of levels deep (or source with extreme indentation) can overflow the stack when rendering, showing, serializing or comparing. In Rust it can also overflow when dropping the tree, which aborts the process rather than returning an error. Decide on a fix (for example a maximum node depth enforced at construction, or iterative render and drop), add shared cases in test/R-35/, and mark the CRITERIA row automated.

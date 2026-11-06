@@ -1,0 +1,9 @@
+{
+  "libraries": [],
+  "diagnostics": [
+    "line 1: not a \"# heading\" or \"- bullet\" — ignored: stray",
+    "line 11: not a \"# heading\" or \"- bullet\" — ignored: `1`",
+    "line 13: definition \"c\" has no body — ignored"
+  ],
+  "compact": "# a\n- f `1` g `2`\n\n# b\n- x\n- + x `2`\n\n# c\n"
+}

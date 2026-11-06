@@ -1,0 +1,12 @@
+{
+  "libraries": [
+    "host"
+  ],
+  "checks": [
+    {
+      "call": "go",
+      "args": [],
+      "value": "16"
+    }
+  ]
+}

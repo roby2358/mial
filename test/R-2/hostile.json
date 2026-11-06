@@ -1,0 +1,10 @@
+{
+  "libraries": [],
+  "diagnostics": [
+    "line 4: unterminated backtick literal",
+    "line 5: unterminated backtick literal"
+  ],
+  "parsed": [
+    "(a (\"\" \"\" \"\" \"\") (\" \" \" \")  \"\")"
+  ]
+}

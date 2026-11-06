@@ -1,0 +1,32 @@
+{
+  "libraries": [],
+  "stepLimit": 500,
+  "checks": [
+    {
+      "call": "count",
+      "args": [
+        10
+      ],
+      "value": "0"
+    },
+    {
+      "call": "count",
+      "args": [
+        1000
+      ],
+      "error": "\"# count\" exceeded the step budget of 500 evaluations"
+    },
+    {
+      "call": "count",
+      "args": [
+        10
+      ],
+      "value": "0"
+    },
+    {
+      "call": "one",
+      "args": [],
+      "value": "2"
+    }
+  ]
+}

@@ -1,0 +1,260 @@
+{
+  "libraries": [
+    "host"
+  ],
+  "checks": [
+    {
+      "call": "len",
+      "args": [
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "value": "3"
+    },
+    {
+      "call": "len",
+      "args": [
+        null
+      ],
+      "value": "0"
+    },
+    {
+      "call": "len",
+      "args": [
+        "abc"
+      ],
+      "value": "3"
+    },
+    {
+      "call": "len",
+      "args": [
+        5
+      ],
+      "error": "length: expected list or string, got number (in length ← in body ← in call to len)"
+    },
+    {
+      "call": "len",
+      "args": [
+        true
+      ],
+      "error": "length: expected list or string, got boolean (in length ← in body ← in call to len)"
+    },
+    {
+      "call": "n",
+      "args": [
+        [
+          1,
+          2
+        ],
+        1
+      ],
+      "value": "2"
+    },
+    {
+      "call": "n",
+      "args": [
+        [
+          1
+        ],
+        5
+      ],
+      "value": "null"
+    },
+    {
+      "call": "n",
+      "args": [
+        [
+          1
+        ],
+        -1
+      ],
+      "value": "null"
+    },
+    {
+      "call": "n",
+      "args": [
+        [
+          1,
+          2
+        ],
+        0.5
+      ],
+      "value": "null"
+    },
+    {
+      "call": "n",
+      "args": [
+        [
+          1,
+          2
+        ],
+        -0.0
+      ],
+      "value": "1"
+    },
+    {
+      "call": "n",
+      "args": [
+        null,
+        0
+      ],
+      "value": "null"
+    },
+    {
+      "call": "n",
+      "args": [
+        5,
+        0
+      ],
+      "error": "nth: expected list, got number (in nth ← in body ← in call to n)"
+    },
+    {
+      "call": "n",
+      "args": [
+        [
+          1
+        ],
+        "0"
+      ],
+      "error": "nth: expected number, got string (in nth ← in body ← in call to n)"
+    },
+    {
+      "call": "app",
+      "args": [
+        [
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "value": "(null 1 2)"
+    },
+    {
+      "call": "app",
+      "args": [
+        [
+          1
+        ],
+        null
+      ],
+      "value": "(null 1)"
+    },
+    {
+      "call": "app",
+      "args": [
+        null,
+        null
+      ],
+      "value": "null"
+    },
+    {
+      "call": "app",
+      "args": [
+        [
+          1
+        ],
+        2
+      ],
+      "error": "append: expected list, got number (in append ← in body ← in call to app)"
+    },
+    {
+      "call": "app-none",
+      "args": [],
+      "value": "null"
+    },
+    {
+      "call": "use-map",
+      "args": [
+        [
+          1,
+          2
+        ]
+      ],
+      "value": "(null 2 4)"
+    },
+    {
+      "call": "use-map",
+      "args": [
+        null
+      ],
+      "value": "null"
+    },
+    {
+      "call": "use-filter",
+      "args": [
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "value": "(null 2 3)"
+    },
+    {
+      "call": "use-filter",
+      "args": [
+        [
+          0
+        ]
+      ],
+      "value": "null"
+    },
+    {
+      "call": "use-reduce",
+      "args": [
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "value": "6"
+    },
+    {
+      "call": "use-reduce",
+      "args": [
+        null
+      ],
+      "value": "0"
+    },
+    {
+      "call": "map-builtin",
+      "args": [],
+      "value": "(null true false)"
+    },
+    {
+      "call": "map-not-fn",
+      "args": [],
+      "error": "map: expected function, got number (in map ← in body ← in call to map-not-fn)"
+    },
+    {
+      "call": "map-not-list",
+      "args": [],
+      "error": "map: expected list, got number (in map ← in body ← in call to map-not-list)"
+    },
+    {
+      "call": "map-err",
+      "args": [],
+      "error": "*: expected number, got string (in * ← in body ← in call to map ← in map ← in body ← in call to map-err)"
+    },
+    {
+      "call": "filter-not-fn",
+      "args": [],
+      "error": "filter: expected function, got number (in filter ← in body ← in call to filter-not-fn)"
+    },
+    {
+      "call": "reduce-not-list",
+      "args": [],
+      "error": "reduce: expected list, got number (in reduce ← in body ← in call to reduce-not-list)"
+    },
+    {
+      "call": "reduce-err",
+      "args": [],
+      "error": "nosuch: undefined symbol (in body ← in call to reduce ← in reduce ← in body ← in call to reduce-err)"
+    }
+  ]
+}

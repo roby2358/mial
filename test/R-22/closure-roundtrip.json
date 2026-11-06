@@ -1,0 +1,12 @@
+{
+  "libraries": [],
+  "diagnostics": [],
+  "checks": [
+    {
+      "call": "source",
+      "args": [],
+      "value": "<lambda>",
+      "markdown": "- lambda\n  - *\n    - a\n    - b\n  - -\n    - a\n    - b"
+    }
+  ]
+}

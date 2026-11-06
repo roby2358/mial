@@ -1,0 +1,87 @@
+{
+  "libraries": [
+    "host"
+  ],
+  "checks": [
+    {
+      "call": "p",
+      "args": [],
+      "value": "\"a 1 true null\"",
+      "log": [
+        "a 1 true null"
+      ]
+    },
+    {
+      "call": "p-none",
+      "args": [],
+      "value": "\"\"",
+      "log": [
+        ""
+      ]
+    },
+    {
+      "call": "p-list",
+      "args": [],
+      "value": "\"- `1`\\n- `2`\"",
+      "log": [
+        "- `1`\n- `2`"
+      ]
+    },
+    {
+      "call": "p-tree",
+      "args": [],
+      "value": "\"- + `1`\\n  - g `2`\"",
+      "log": [
+        "- + `1`\n  - g `2`"
+      ]
+    },
+    {
+      "call": "p-sym",
+      "args": [],
+      "value": "\"foo\"",
+      "log": [
+        "foo"
+      ]
+    },
+    {
+      "call": "pm",
+      "args": [],
+      "value": "(+ 1 (g \"s\"))",
+      "log": [
+        "- +\n  - `1`\n  - g\n    - `\"s\"`"
+      ]
+    },
+    {
+      "call": "pm-list",
+      "args": [],
+      "value": "(null 2 3)",
+      "log": [
+        "- `2`\n- `3`"
+      ]
+    },
+    {
+      "call": "pm-null",
+      "args": [],
+      "value": "null",
+      "log": [
+        "- `null`"
+      ]
+    },
+    {
+      "call": "parse-it",
+      "args": [],
+      "value": "(program a)",
+      "log": []
+    },
+    {
+      "call": "parse-bad",
+      "args": [],
+      "error": "parse-mial: expected string, got number (in parse-mial ← in body ← in call to parse-bad)"
+    },
+    {
+      "call": "parse-lines",
+      "args": [],
+      "value": "(program (f (+ 1)) g)"
+    }
+  ]
+}

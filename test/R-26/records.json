@@ -1,0 +1,201 @@
+{
+  "libraries": [
+    "host"
+  ],
+  "checks": [
+    {
+      "call": "base",
+      "args": [],
+      "value": "(record (a 1) (b 2))"
+    },
+    {
+      "call": "sym-key",
+      "args": [],
+      "value": "(record (k 1))"
+    },
+    {
+      "call": "odd",
+      "args": [],
+      "value": "(record (a 1) (b null))"
+    },
+    {
+      "call": "bad-key",
+      "args": [],
+      "error": "record: expected key, got number (in record ← in body ← in call to bad-key)"
+    },
+    {
+      "call": "empty",
+      "args": [],
+      "value": "record"
+    },
+    {
+      "call": "g",
+      "args": [
+        {
+          "a": 1,
+          "b": 2
+        },
+        "a"
+      ],
+      "value": "1"
+    },
+    {
+      "call": "g",
+      "args": [
+        {
+          "a": 1
+        },
+        "zz"
+      ],
+      "value": "null"
+    },
+    {
+      "call": "g",
+      "args": [
+        null,
+        "a"
+      ],
+      "value": "null"
+    },
+    {
+      "call": "g",
+      "args": [
+        5,
+        "a"
+      ],
+      "error": "get: expected record, got number (in get ← in body ← in call to g)"
+    },
+    {
+      "call": "g",
+      "args": [
+        {
+          "a": 1
+        },
+        5
+      ],
+      "error": "get: expected key, got number (in get ← in body ← in call to g)"
+    },
+    {
+      "call": "p",
+      "args": [
+        {
+          "a": 1,
+          "b": 2
+        },
+        "a",
+        9
+      ],
+      "value": "(record (a 9) (b 2))"
+    },
+    {
+      "call": "p",
+      "args": [
+        {
+          "b": 2
+        },
+        "a",
+        9
+      ],
+      "value": "(record (b 2) (a 9))"
+    },
+    {
+      "call": "p",
+      "args": [
+        null,
+        "a",
+        9
+      ],
+      "value": "(record (a 9))"
+    },
+    {
+      "call": "p",
+      "args": [
+        5,
+        "a",
+        9
+      ],
+      "error": "put: expected record, got number (in put ← in body ← in call to p)"
+    },
+    {
+      "call": "p",
+      "args": [
+        {
+          "a": 1
+        },
+        true,
+        9
+      ],
+      "error": "put: expected key, got boolean (in put ← in body ← in call to p)"
+    },
+    {
+      "call": "h",
+      "args": [
+        {
+          "a": null
+        },
+        "a"
+      ],
+      "value": "true"
+    },
+    {
+      "call": "h",
+      "args": [
+        {
+          "a": 1
+        },
+        "b"
+      ],
+      "value": "false"
+    },
+    {
+      "call": "h",
+      "args": [
+        null,
+        "a"
+      ],
+      "value": "false"
+    },
+    {
+      "call": "h",
+      "args": [
+        "x",
+        "a"
+      ],
+      "error": "has?: expected record, got string (in has? ← in body ← in call to h)"
+    },
+    {
+      "call": "ks",
+      "args": [
+        {
+          "a": 1,
+          "b": 2
+        }
+      ],
+      "value": "(null \"a\" \"b\")"
+    },
+    {
+      "call": "ks",
+      "args": [
+        null
+      ],
+      "value": "null"
+    },
+    {
+      "call": "ks",
+      "args": [
+        1
+      ],
+      "error": "keys: expected record, got number (in keys ← in body ← in call to ks)"
+    },
+    {
+      "call": "nomut",
+      "args": [],
+      "value": "(null 1 2)"
+    },
+    {
+      "call": "read-quoted",
+      "args": [],
+      "value": "0.25"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "libraries": [],
+  "checks": [
+    {
+      "call": "none",
+      "args": [],
+      "value": "0"
+    },
+    {
+      "call": "one",
+      "args": [],
+      "value": "5"
+    },
+    {
+      "call": "sum",
+      "args": [],
+      "value": "6.5"
+    },
+    {
+      "call": "one-str",
+      "args": [],
+      "value": "\"a\""
+    },
+    {
+      "call": "join",
+      "args": [],
+      "value": "\"n=1.5 k=2\""
+    },
+    {
+      "call": "num-first",
+      "args": [],
+      "value": "\"12x\""
+    },
+    {
+      "call": "join-big",
+      "args": [],
+      "value": "\"1e+211e-7100\""
+    },
+    {
+      "call": "add-null",
+      "args": [],
+      "error": "+: expected number or string, got null (in + ← in body ← in call to add-null)"
+    },
+    {
+      "call": "add-bool",
+      "args": [],
+      "error": "+: expected number or string, got boolean (in + ← in body ← in call to add-bool)"
+    },
+    {
+      "call": "str-null",
+      "args": [],
+      "error": "+: expected number or string, got null (in + ← in body ← in call to str-null)"
+    },
+    {
+      "call": "add-list",
+      "args": [],
+      "error": "+: expected number or string, got list (in + ← in body ← in call to add-list)"
+    }
+  ]
+}

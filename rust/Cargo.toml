@@ -1,0 +1,12 @@
+[package]
+name = "mial"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "MIAL (MarkdownIsALisp) for Rust"
+publish = false
+
+[dependencies]
+serde = "1"
+serde_json = { version = "1", features = ["float_roundtrip", "preserve_order", "unbounded_depth"] }
+stacker = "0.1"

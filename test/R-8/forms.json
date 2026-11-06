@@ -1,0 +1,70 @@
+{
+  "libraries": [],
+  "checks": [
+    {
+      "call": "q",
+      "args": [],
+      "value": "(+ 1 2)"
+    },
+    {
+      "call": "q-two",
+      "args": [],
+      "value": "1"
+    },
+    {
+      "call": "q-lines",
+      "args": [],
+      "value": "(+ 1 2)"
+    },
+    {
+      "call": "q-none",
+      "args": [],
+      "error": "mial: undefined symbol (in body ← in call to q-none)"
+    },
+    {
+      "call": "ev",
+      "args": [],
+      "value": "3"
+    },
+    {
+      "call": "ev-err",
+      "args": [],
+      "error": "nosuch: undefined symbol (in eval ← in body ← in call to ev-err)"
+    },
+    {
+      "call": "if-t",
+      "args": [],
+      "value": "1"
+    },
+    {
+      "call": "if-f",
+      "args": [],
+      "value": "2"
+    },
+    {
+      "call": "if-no-else",
+      "args": [],
+      "value": "null"
+    },
+    {
+      "call": "if-no-then",
+      "args": [],
+      "value": "null"
+    },
+    {
+      "call": "if-lazy",
+      "args": [],
+      "value": "1"
+    },
+    {
+      "call": "if-err",
+      "args": [],
+      "error": "nosuch: undefined symbol (in if condition ← in body ← in call to if-err)"
+    },
+    {
+      "call": "if-extra",
+      "args": [],
+      "value": "1"
+    }
+  ]
+}

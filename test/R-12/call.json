@@ -1,0 +1,47 @@
+{
+  "libraries": [
+    "host"
+  ],
+  "checks": [
+    {
+      "call": "run-zero",
+      "args": [],
+      "value": "8"
+    },
+    {
+      "call": "plus-zero",
+      "args": [],
+      "value": "0"
+    },
+    {
+      "call": "times-zero",
+      "args": [],
+      "value": "1"
+    },
+    {
+      "call": "with-args",
+      "args": [],
+      "value": "3"
+    },
+    {
+      "call": "read-quoted",
+      "args": [],
+      "value": "(record (a 1))"
+    },
+    {
+      "call": "not-fn",
+      "args": [],
+      "error": "call: not a function (in body ← in call to not-fn)"
+    },
+    {
+      "call": "bad-fn",
+      "args": [],
+      "error": "nosuch: undefined symbol (in call ← in body ← in call to bad-fn)"
+    },
+    {
+      "call": "bad-arg",
+      "args": [],
+      "error": "nosuch: undefined symbol (in argument to call ← in body ← in call to bad-arg)"
+    }
+  ]
+}

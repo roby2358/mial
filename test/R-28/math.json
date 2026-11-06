@@ -1,0 +1,204 @@
+{
+  "libraries": [
+    "host"
+  ],
+  "checks": [
+    {
+      "call": "mn",
+      "args": [
+        1,
+        2
+      ],
+      "value": "1"
+    },
+    {
+      "call": "mx",
+      "args": [
+        1,
+        2
+      ],
+      "value": "2"
+    },
+    {
+      "call": "mn3",
+      "args": [],
+      "value": "1"
+    },
+    {
+      "call": "mx3",
+      "args": [],
+      "value": "3"
+    },
+    {
+      "call": "mn1",
+      "args": [],
+      "value": "4"
+    },
+    {
+      "call": "mn",
+      "args": [
+        1,
+        "a"
+      ],
+      "error": "min: expected number, got string (in min ← in body ← in call to mn)"
+    },
+    {
+      "call": "mx",
+      "args": [
+        null,
+        1
+      ],
+      "error": "max: expected number, got null (in max ← in body ← in call to mx)"
+    },
+    {
+      "call": "a",
+      "args": [
+        -5
+      ],
+      "value": "5"
+    },
+    {
+      "call": "a",
+      "args": [
+        -0.0
+      ],
+      "value": "0"
+    },
+    {
+      "call": "a",
+      "args": [
+        "x"
+      ],
+      "error": "abs: expected number, got string (in abs ← in body ← in call to a)"
+    },
+    {
+      "call": "fl",
+      "args": [
+        1.9
+      ],
+      "value": "1"
+    },
+    {
+      "call": "fl",
+      "args": [
+        -1.1
+      ],
+      "value": "-2"
+    },
+    {
+      "call": "fl",
+      "args": [
+        true
+      ],
+      "error": "floor: expected number, got boolean (in floor ← in body ← in call to fl)"
+    },
+    {
+      "call": "rd",
+      "args": [
+        2.5
+      ],
+      "value": "3"
+    },
+    {
+      "call": "rd",
+      "args": [
+        -2.5
+      ],
+      "value": "-2"
+    },
+    {
+      "call": "rd",
+      "args": [
+        -0.5
+      ],
+      "value": "0"
+    },
+    {
+      "call": "rd",
+      "args": [
+        1.5
+      ],
+      "value": "2"
+    },
+    {
+      "call": "rd",
+      "args": [
+        0.49999999999999994
+      ],
+      "value": "0"
+    },
+    {
+      "call": "rd",
+      "args": [
+        4503599627370497
+      ],
+      "value": "4503599627370497"
+    },
+    {
+      "call": "rd",
+      "args": [
+        1e+21
+      ],
+      "value": "1e+21"
+    },
+    {
+      "call": "rd",
+      "args": [
+        -0.2
+      ],
+      "value": "0"
+    },
+    {
+      "call": "rd",
+      "args": [
+        null
+      ],
+      "error": "round: expected number, got null (in round ← in body ← in call to rd)"
+    },
+    {
+      "call": "cl",
+      "args": [
+        5,
+        0,
+        10
+      ],
+      "value": "5"
+    },
+    {
+      "call": "cl",
+      "args": [
+        -1,
+        0,
+        10
+      ],
+      "value": "0"
+    },
+    {
+      "call": "cl",
+      "args": [
+        11,
+        0,
+        10
+      ],
+      "value": "10"
+    },
+    {
+      "call": "cl",
+      "args": [
+        5,
+        3,
+        2
+      ],
+      "value": "2"
+    },
+    {
+      "call": "cl",
+      "args": [
+        5,
+        "a",
+        2
+      ],
+      "error": "clamp: expected number, got string (in clamp ← in body ← in call to cl)"
+    }
+  ]
+}

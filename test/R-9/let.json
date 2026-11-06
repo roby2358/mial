@@ -1,0 +1,42 @@
+{
+  "libraries": [],
+  "checks": [
+    {
+      "call": "seq",
+      "args": [],
+      "value": "12"
+    },
+    {
+      "call": "missing",
+      "args": [],
+      "value": "null"
+    },
+    {
+      "call": "empty",
+      "args": [],
+      "value": "null"
+    },
+    {
+      "call": "bad",
+      "args": [],
+      "error": "let: binding `1` must be a symbol (in body ← in call to bad)"
+    },
+    {
+      "call": "err",
+      "args": [],
+      "error": "nosuch: undefined symbol (in let binding a ← in body ← in call to err)"
+    },
+    {
+      "call": "shadow",
+      "args": [
+        5
+      ],
+      "value": "6"
+    },
+    {
+      "call": "extra",
+      "args": [],
+      "value": "1"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "libraries": [],
+  "checks": [
+    {
+      "run": true,
+      "value": "7",
+      "log": [
+        "hello"
+      ]
+    }
+  ]
+}

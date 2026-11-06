@@ -1,0 +1,26 @@
+# main
+* print
+  * +
+    * `2`
+    * `3`
+* print
+  * tag
+    * mial
+      * +
+        * `2`
+        * `3`
+* print-mial
+  * children
+    * mial
+      * +
+        * `2`
+        * `3`
+* print
+  * eval
+    * make-mial
+      * `"*"`
+      * children
+        * mial
+          * +
+            * `2`
+            * `3`

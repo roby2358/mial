@@ -1,0 +1,31 @@
+{
+  "libraries": [],
+  "diagnostics": [
+    "line 3: bare symbol \"b\" in \"# add\" has its value discarded — declare several parameters with \"- * a b\"",
+    "line 10: bare symbol \"c\" in \"# multi\" has its value discarded — declare several parameters with \"- * a b\""
+  ],
+  "checks": [
+    {
+      "call": "add",
+      "args": [
+        1,
+        2
+      ],
+      "error": "b: undefined symbol (in body ← in call to add)"
+    },
+    {
+      "call": "identity",
+      "args": [
+        7
+      ],
+      "value": "7"
+    },
+    {
+      "call": "fine",
+      "args": [
+        3
+      ],
+      "value": "3"
+    }
+  ]
+}

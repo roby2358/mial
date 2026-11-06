@@ -1,0 +1,20 @@
+{
+  "libraries": [],
+  "checks": [
+    {
+      "call": "f",
+      "args": [],
+      "error": "record: undefined symbol (in body ← in call to f)"
+    },
+    {
+      "call": "g",
+      "args": [],
+      "error": "map: undefined symbol (in body ← in call to g)"
+    },
+    {
+      "call": "cored",
+      "args": [],
+      "value": "(null 1)"
+    }
+  ]
+}

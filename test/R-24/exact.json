@@ -1,0 +1,11 @@
+{
+  "libraries": [],
+  "stepLimit": 3,
+  "checks": [
+    {
+      "call": "f",
+      "args": [],
+      "value": "3"
+    }
+  ]
+}

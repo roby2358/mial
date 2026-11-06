@@ -1,0 +1,11 @@
+{
+  "libraries": [
+    "host"
+  ],
+  "checks": [
+    {
+      "run": true,
+      "value": "\"tick 50\\nfood: 72\\nwater: 68\""
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "libraries": [],
+  "checks": [
+    {
+      "call": "und",
+      "args": [],
+      "error": "nosuch: undefined symbol (in body ← in call to und)"
+    },
+    {
+      "call": "proto1",
+      "args": [],
+      "error": "constructor: undefined symbol (in body ← in call to proto1)"
+    },
+    {
+      "call": "proto2",
+      "args": [],
+      "error": "__proto__: undefined symbol (in body ← in call to proto2)"
+    },
+    {
+      "call": "proto3",
+      "args": [],
+      "error": "toString: undefined symbol (in body ← in call to proto3)"
+    },
+    {
+      "call": "proto4",
+      "args": [],
+      "error": "hasOwnProperty: undefined symbol (in body ← in call to proto4)"
+    },
+    {
+      "call": "proto5",
+      "args": [],
+      "error": "__class__: undefined symbol (in body ← in call to proto5)"
+    },
+    {
+      "call": "lit-op",
+      "args": [],
+      "error": "`1`: not a function (in body ← in call to lit-op)"
+    },
+    {
+      "call": "str-op",
+      "args": [],
+      "error": "`\"f\"`: not a function (in body ← in call to str-op)"
+    },
+    {
+      "call": "null-op",
+      "args": [],
+      "error": "`null`: not a function (in body ← in call to null-op)"
+    },
+    {
+      "call": "use",
+      "args": [],
+      "error": "K: not a function (in body ← in call to use)"
+    },
+    {
+      "call": "und-op",
+      "args": [],
+      "error": "nosuch: undefined symbol (in body ← in call to und-op)"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "libraries": [],
+  "checks": [
+    {
+      "run": true,
+      "error": "missing definition \"# main\""
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "libraries": [],
+  "checks": [
+    {
+      "deserialize": "{\"value\":0.30000000000000004,\"children\":[]}",
+      "serialized": "{\"value\":0.30000000000000004,\"children\":[]}"
+    },
+    {
+      "deserialize": "{\"value\":1.7976931348623157e+308,\"children\":[]}",
+      "serialized": "{\"value\":1.7976931348623157e+308,\"children\":[]}"
+    },
+    {
+      "deserialize": "{\"value\":5e-324,\"children\":[]}",
+      "serialized": "{\"value\":5e-324,\"children\":[]}"
+    },
+    {
+      "deserialize": "{\"value\":123456789012345680000,\"children\":[]}",
+      "serialized": "{\"value\":123456789012345680000,\"children\":[]}"
+    },
+    {
+      "deserialize": "{\"value\":1e+21,\"children\":[]}",
+      "serialized": "{\"value\":1e+21,\"children\":[]}"
+    },
+    {
+      "deserialize": "{\"value\":1e-7,\"children\":[]}",
+      "serialized": "{\"value\":1e-7,\"children\":[]}"
+    },
+    {
+      "deserialize": "{\"value\":0.1,\"children\":[]}",
+      "serialized": "{\"value\":0.1,\"children\":[]}"
+    },
+    {
+      "deserialize": "{\"value\":2.2250738585072014e-308,\"children\":[]}",
+      "serialized": "{\"value\":2.2250738585072014e-308,\"children\":[]}"
+    },
+    {
+      "deserialize": "{\"value\":4.35,\"children\":[]}",
+      "serialized": "{\"value\":4.35,\"children\":[]}"
+    },
+    {
+      "deserialize": "{\"value\":9007199254740993,\"children\":[]}",
+      "serialized": "{\"value\":9007199254740992,\"children\":[]}"
+    }
+  ]
+}

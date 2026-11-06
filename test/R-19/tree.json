@@ -1,0 +1,100 @@
+{
+  "libraries": [],
+  "checks": [
+    {
+      "call": "tag-tree",
+      "args": [],
+      "value": "+"
+    },
+    {
+      "call": "tag-list",
+      "args": [],
+      "value": "null"
+    },
+    {
+      "call": "tag-lit",
+      "args": [],
+      "value": "5"
+    },
+    {
+      "call": "kids",
+      "args": [],
+      "value": "(null 1 2)"
+    },
+    {
+      "call": "kids-atom",
+      "args": [],
+      "value": "null"
+    },
+    {
+      "call": "make-str",
+      "args": [],
+      "value": "(* 2 3)"
+    },
+    {
+      "call": "make-sym",
+      "args": [],
+      "value": "(foo 1)"
+    },
+    {
+      "call": "make-null-kids",
+      "args": [],
+      "value": "x"
+    },
+    {
+      "call": "make-num",
+      "args": [],
+      "value": "5"
+    },
+    {
+      "call": "make-bad",
+      "args": [],
+      "error": "make-mial: expected list, got number (in make-mial ← in body ← in call to make-bad)"
+    },
+    {
+      "call": "surgery",
+      "args": [],
+      "value": "6"
+    },
+    {
+      "call": "roundtrip",
+      "args": [],
+      "value": "true"
+    },
+    {
+      "call": "of-one-body",
+      "args": [],
+      "value": "(null 1 2)"
+    },
+    {
+      "call": "of-single",
+      "args": [],
+      "value": "(+ 1 2)"
+    },
+    {
+      "call": "of-param",
+      "args": [],
+      "value": "(lambda x (+ x 1))"
+    },
+    {
+      "call": "of-params",
+      "args": [],
+      "value": "(lambda (* a b) (+ a b))"
+    },
+    {
+      "call": "of-builtin",
+      "args": [],
+      "error": "mial-of: builtins have no MIAL source (in mial-of ← in body ← in call to of-builtin)"
+    },
+    {
+      "call": "of-data",
+      "args": [],
+      "value": "5"
+    },
+    {
+      "call": "of-rerun",
+      "args": [],
+      "value": "3"
+    }
+  ]
+}

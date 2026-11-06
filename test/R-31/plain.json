@@ -1,0 +1,115 @@
+{
+  "libraries": [],
+  "checks": [
+    {
+      "call": "id",
+      "args": [
+        null
+      ],
+      "plain": null
+    },
+    {
+      "call": "id",
+      "args": [
+        true
+      ],
+      "plain": true
+    },
+    {
+      "call": "id",
+      "args": [
+        1.5
+      ],
+      "plain": 1.5
+    },
+    {
+      "call": "id",
+      "args": [
+        "x"
+      ],
+      "plain": "x"
+    },
+    {
+      "call": "id",
+      "args": [
+        [
+          1,
+          "a",
+          null,
+          [
+            2
+          ]
+        ]
+      ],
+      "plain": [
+        1,
+        "a",
+        null,
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "call": "id",
+      "args": [
+        []
+      ],
+      "plain": null
+    },
+    {
+      "call": "id",
+      "args": [
+        {
+          "a": 1,
+          "b": [
+            2
+          ],
+          "c": {
+            "d": null
+          }
+        }
+      ],
+      "value": "(record (a 1) (b (null 2)) (c (record (d null))))",
+      "plain": {
+        "a": 1,
+        "b": [
+          2
+        ],
+        "c": {
+          "d": null
+        }
+      }
+    },
+    {
+      "call": "id",
+      "args": [
+        {}
+      ],
+      "plain": {}
+    },
+    {
+      "call": "closure",
+      "args": [],
+      "plain": "<lambda>"
+    },
+    {
+      "call": "tree",
+      "args": [],
+      "plain": "(+ 1 (g \"s\"))"
+    },
+    {
+      "call": "sym",
+      "args": [],
+      "plain": "foo"
+    },
+    {
+      "call": "q-record",
+      "args": [],
+      "plain": {
+        "a": 1,
+        "b": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "libraries": [],
+  "checks": [
+    {
+      "call": "t",
+      "args": [],
+      "value": "(+ 1 \"s\" true (g null) 2)",
+      "markdown": "- +\n  - `1`\n  - `\"s\"`\n  - true\n  - g\n    - `null`\n  - `2`",
+      "compactMarkdown": "- + `1` `\"s\"` true\n  - g `null`\n  - `2`",
+      "display": "- + `1` `\"s\"` true\n  - g `null`\n  - `2`"
+    },
+    {
+      "call": "mk2",
+      "args": [],
+      "value": "<lambda>",
+      "markdown": "- lambda\n  - *\n    - a\n    - b\n  - +\n    - a\n    - b",
+      "compactMarkdown": "- lambda\n  - * a b\n  - + a b",
+      "display": "<lambda>"
+    },
+    {
+      "call": "mk1",
+      "args": [],
+      "value": "<lambda>",
+      "markdown": "- lambda\n  - y\n  - y",
+      "compactMarkdown": "- lambda y y"
+    },
+    {
+      "call": "mk0",
+      "args": [],
+      "value": "<lambda>",
+      "markdown": "- lambda\n  - *\n  - `3`",
+      "compactMarkdown": "- lambda * `3`"
+    },
+    {
+      "call": "nested-list",
+      "args": [],
+      "value": "(null 1 (null 2 3) 4)",
+      "markdown": "- `1`\n- `2`\n- `3`\n- `4`",
+      "compactMarkdown": "- `1`\n- `2`\n- `3`\n- `4`"
+    },
+    {
+      "call": "err-free",
+      "args": [],
+      "value": "\"quote\"",
+      "markdown": "- `\"quote\"`"
+    },
+    {
+      "call": "of-builtin",
+      "args": [],
+      "value": "(null +)",
+      "markdown": "- +"
+    },
+    {
+      "call": "pm-two",
+      "args": [],
+      "value": "<lambda>",
+      "log": [
+        "- lambda\n  - *\n    - a\n    - b\n  - +\n    - a\n    - b"
+      ]
+    }
+  ]
+}

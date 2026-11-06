@@ -1,0 +1,4 @@
+{
+  "libraries": [],
+  "compact": "# a\n- f `1` g `2`\n\n# b\n- x\n- + x `2`\n\n# c\n- lambda\n  - * a b\n  - + a b\n"
+}

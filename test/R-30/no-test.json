@@ -1,0 +1,12 @@
+{
+  "libraries": [
+    "host"
+  ],
+  "checks": [
+    {
+      "call": "d",
+      "args": [],
+      "error": "test-double: undefined symbol (in body ← in call to d)"
+    }
+  ]
+}

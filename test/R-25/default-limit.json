@@ -1,0 +1,42 @@
+{
+  "libraries": [
+    "host"
+  ],
+  "checks": [
+    {
+      "call": "down",
+      "args": [
+        498
+      ],
+      "value": "0"
+    },
+    {
+      "call": "down",
+      "args": [
+        499
+      ],
+      "error": "\"# down\" recursed too deeply (depth limit 1000)"
+    },
+    {
+      "call": "forever",
+      "args": [
+        1
+      ],
+      "error": "\"# forever\" recursed too deeply (depth limit 1000)"
+    },
+    {
+      "call": "via-map",
+      "args": [
+        1
+      ],
+      "error": "\"# via-map\" recursed too deeply (depth limit 1000)"
+    },
+    {
+      "call": "via-reduce",
+      "args": [
+        1
+      ],
+      "error": "\"# via-reduce\" recursed too deeply (depth limit 1000)"
+    }
+  ]
+}

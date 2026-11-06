@@ -1,0 +1,88 @@
+{
+  "libraries": [
+    "host"
+  ],
+  "checks": [
+    {
+      "call": "f",
+      "args": [
+        1,
+        2,
+        3
+      ],
+      "value": "(null 1 2)"
+    },
+    {
+      "call": "f",
+      "args": [
+        1
+      ],
+      "value": "(null 1 null)"
+    },
+    {
+      "call": "f",
+      "args": [],
+      "value": "(null null null)"
+    },
+    {
+      "call": "use-extra",
+      "args": [],
+      "value": "(null 1 2)"
+    },
+    {
+      "call": "use-missing",
+      "args": [],
+      "value": "(null 1 null)"
+    },
+    {
+      "call": "use-neg",
+      "args": [],
+      "error": "+: expected number or string, got null (in + ← in body ← in call to call ← in body ← in call to use-neg)"
+    },
+    {
+      "call": "builtin-extra",
+      "args": [],
+      "value": "2"
+    },
+    {
+      "call": "builtin-missing",
+      "args": [],
+      "error": "%: expected number, got null (in % ← in body ← in call to builtin-missing)"
+    },
+    {
+      "call": "not-extra",
+      "args": [],
+      "value": "false"
+    },
+    {
+      "call": "not-via-call",
+      "args": [],
+      "value": "true"
+    },
+    {
+      "call": "map-extra",
+      "args": [],
+      "value": "(null (null 1 null))"
+    },
+    {
+      "call": "cons-none",
+      "args": [],
+      "value": "null"
+    },
+    {
+      "call": "minus-none",
+      "args": [],
+      "error": "-: expected number, got null (in call ← in body ← in call to minus-none)"
+    },
+    {
+      "call": "divide-none",
+      "args": [],
+      "error": "/: expected number, got null (in call ← in body ← in call to divide-none)"
+    },
+    {
+      "call": "min-none",
+      "args": [],
+      "error": "min: expected number, got null (in call ← in body ← in call to min-none)"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+# seq
+- let
+  - vars
+    - a
+      - `2`
+    - b
+      - * a `5`
+  - + a b
+# missing
+- let
+  - vars
+    - a
+  - a
+# empty
+- let
+  - vars
+# bad
+- let
+  - vars
+    - `1`
+      - `2`
+  - `3`
+# err
+- let
+  - vars
+    - a
+      - nosuch
+  - a
+# shadow
+- x
+- let
+  - vars
+    - x
+      - + x `1`
+  - x
+# extra
+- let
+  - vars
+    - a
+      - `1`
+      - nosuch
+  - a

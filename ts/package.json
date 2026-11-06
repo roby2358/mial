@@ -1,0 +1,17 @@
+{
+  "name": "mial-ts",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "description": "MIAL (MarkdownIsALisp) for TypeScript",
+  "type": "module",
+  "main": "src/mial.ts",
+  "scripts": {
+    "check": "tsc --noEmit",
+    "test": "node --test test/"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "typescript": "^7.0.0"
+  }
+}

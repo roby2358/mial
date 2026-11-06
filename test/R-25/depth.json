@@ -1,0 +1,27 @@
+{
+  "libraries": [],
+  "depthLimit": 50,
+  "checks": [
+    {
+      "call": "down",
+      "args": [
+        23
+      ],
+      "value": "0"
+    },
+    {
+      "call": "down",
+      "args": [
+        24
+      ],
+      "error": "\"# down\" recursed too deeply (depth limit 50)"
+    },
+    {
+      "call": "forever",
+      "args": [
+        1
+      ],
+      "error": "\"# forever\" recursed too deeply (depth limit 50)"
+    }
+  ]
+}

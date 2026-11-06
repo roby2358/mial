@@ -1,0 +1,149 @@
+{
+  "libraries": [
+    "host"
+  ],
+  "checks": [
+    {
+      "call": "s",
+      "args": [
+        5
+      ],
+      "value": "\"5\""
+    },
+    {
+      "call": "s",
+      "args": [
+        "a"
+      ],
+      "value": "\"a\""
+    },
+    {
+      "call": "s",
+      "args": [
+        null
+      ],
+      "value": "\"null\""
+    },
+    {
+      "call": "s",
+      "args": [
+        true
+      ],
+      "value": "\"true\""
+    },
+    {
+      "call": "s",
+      "args": [
+        [
+          1,
+          2
+        ]
+      ],
+      "value": "\"- `1`\\n- `2`\""
+    },
+    {
+      "call": "fn",
+      "args": [],
+      "value": "\"<lambda>\""
+    },
+    {
+      "call": "bi",
+      "args": [],
+      "value": "\"+\""
+    },
+    {
+      "call": "sy",
+      "args": [],
+      "value": "\"foo\""
+    },
+    {
+      "call": "t",
+      "args": [],
+      "value": "\"one\\ntwo\\n3\\ntrue\"",
+      "display": "one\ntwo\n3\ntrue"
+    },
+    {
+      "call": "t-none",
+      "args": [],
+      "value": "\"\""
+    },
+    {
+      "call": "j",
+      "args": [
+        [
+          1,
+          2
+        ],
+        ","
+      ],
+      "value": "\"1,2\""
+    },
+    {
+      "call": "j",
+      "args": [
+        [
+          1,
+          2
+        ],
+        null
+      ],
+      "value": "\"12\""
+    },
+    {
+      "call": "j",
+      "args": [
+        null,
+        ","
+      ],
+      "value": "\"\""
+    },
+    {
+      "call": "j",
+      "args": [
+        1,
+        ","
+      ],
+      "error": "join: expected list, got number (in join ← in body ← in call to j)"
+    },
+    {
+      "call": "j",
+      "args": [
+        [
+          1
+        ],
+        1
+      ],
+      "error": "join: expected string, got number (in join ← in body ← in call to j)"
+    },
+    {
+      "call": "j1",
+      "args": [
+        [
+          "a",
+          "b"
+        ]
+      ],
+      "value": "\"ab\""
+    },
+    {
+      "call": "len",
+      "args": [],
+      "value": "2"
+    },
+    {
+      "call": "len2",
+      "args": [],
+      "value": "1"
+    },
+    {
+      "call": "len3",
+      "args": [],
+      "value": "5"
+    },
+    {
+      "call": "j-tree",
+      "args": [],
+      "value": "\"- + `1`|2\""
+    }
+  ]
+}

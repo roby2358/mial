@@ -1,0 +1,90 @@
+{
+  "libraries": [],
+  "checks": [
+    {
+      "call": "l",
+      "args": [],
+      "value": "(null 1 2 3)"
+    },
+    {
+      "call": "empty",
+      "args": [],
+      "value": "null"
+    },
+    {
+      "call": "car1",
+      "args": [],
+      "value": "1"
+    },
+    {
+      "call": "car-empty",
+      "args": [],
+      "error": "car: empty list (in car ← in body ← in call to car-empty)"
+    },
+    {
+      "call": "car-atom",
+      "args": [],
+      "error": "car: empty list (in car ← in body ← in call to car-atom)"
+    },
+    {
+      "call": "car-tree",
+      "args": [],
+      "value": "1"
+    },
+    {
+      "call": "cdr1",
+      "args": [],
+      "value": "(null 2 3)"
+    },
+    {
+      "call": "cdr-one",
+      "args": [],
+      "value": "null"
+    },
+    {
+      "call": "cdr-null",
+      "args": [],
+      "value": "null"
+    },
+    {
+      "call": "cdr-tree2",
+      "args": [],
+      "value": "(null 2)"
+    },
+    {
+      "call": "cdr-tree3",
+      "args": [],
+      "value": "(null 2 3)"
+    },
+    {
+      "call": "cdr-atom",
+      "args": [],
+      "error": "cdr: expected list, got number (in cdr ← in body ← in call to cdr-atom)"
+    },
+    {
+      "call": "cons-null",
+      "args": [],
+      "value": "(null 1)"
+    },
+    {
+      "call": "cons-list",
+      "args": [],
+      "value": "(null 1 2)"
+    },
+    {
+      "call": "cons-fold",
+      "args": [],
+      "value": "(null 1 2 3)"
+    },
+    {
+      "call": "cons-atom",
+      "args": [],
+      "value": "(null 1 2)"
+    },
+    {
+      "call": "cons-one",
+      "args": [],
+      "value": "9"
+    }
+  ]
+}

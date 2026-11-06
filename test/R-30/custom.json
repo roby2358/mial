@@ -1,0 +1,30 @@
+{
+  "libraries": [
+    "test"
+  ],
+  "checks": [
+    {
+      "call": "d",
+      "args": [],
+      "value": "8"
+    },
+    {
+      "call": "d-bad",
+      "args": [],
+      "error": "test-double: expected number (in test-double ← in body ← in call to d-bad)"
+    },
+    {
+      "call": "ap",
+      "args": [],
+      "value": "2"
+    },
+    {
+      "call": "lg",
+      "args": [],
+      "value": "\"hi\"",
+      "log": [
+        "hi"
+      ]
+    }
+  ]
+}

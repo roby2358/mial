@@ -1,0 +1,11 @@
+{
+  "libraries": [],
+  "stepLimit": 2,
+  "checks": [
+    {
+      "call": "f",
+      "args": [],
+      "error": "\"# f\" exceeded the step budget of 2 evaluations"
+    }
+  ]
+}

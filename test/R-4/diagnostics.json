@@ -1,0 +1,28 @@
+{
+  "libraries": [],
+  "diagnostics": [
+    "line 1: not a \"# heading\" or \"- bullet\" — ignored: stray text",
+    "line 2: bullet before any \"# heading\" — ignored: - early bullet",
+    "line 4: not a \"# heading\" or \"- bullet\" — ignored: prose here",
+    "line 6: not a \"# heading\" or \"- bullet\" — ignored: -",
+    "line 7: not a \"# heading\" or \"- bullet\" — ignored: *nospace",
+    "line 8: definition \"empty\" has no body — ignored"
+  ],
+  "checks": [
+    {
+      "call": "a",
+      "args": [],
+      "value": "1"
+    },
+    {
+      "call": "b",
+      "args": [],
+      "value": "2"
+    },
+    {
+      "call": "empty",
+      "args": [],
+      "error": "missing definition \"# empty\""
+    }
+  ]
+}

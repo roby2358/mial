@@ -1,0 +1,60 @@
+{
+  "libraries": [],
+  "checks": [
+    {
+      "call": "and-guard",
+      "args": [
+        null
+      ],
+      "value": "false"
+    },
+    {
+      "call": "and-guard",
+      "args": [
+        5
+      ],
+      "value": "true"
+    },
+    {
+      "call": "and-all",
+      "args": [],
+      "value": "true"
+    },
+    {
+      "call": "or-first",
+      "args": [],
+      "value": "true"
+    },
+    {
+      "call": "or-none",
+      "args": [],
+      "value": "false"
+    },
+    {
+      "call": "and-stops",
+      "args": [],
+      "value": "false"
+    },
+    {
+      "call": "and-err",
+      "args": [],
+      "error": "nosuch: undefined symbol (in and ← in body ← in call to and-err)"
+    },
+    {
+      "call": "or-err",
+      "args": [],
+      "error": "nosuch: undefined symbol (in or ← in body ← in call to or-err)"
+    },
+    {
+      "call": "no-log",
+      "args": [],
+      "value": "true",
+      "log": []
+    },
+    {
+      "call": "as-value",
+      "args": [],
+      "error": "and: undefined symbol (in call ← in body ← in call to as-value)"
+    }
+  ]
+}

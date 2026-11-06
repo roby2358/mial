@@ -1,0 +1,120 @@
+{
+  "libraries": [],
+  "checks": [
+    {
+      "call": "sub",
+      "args": [],
+      "value": "1"
+    },
+    {
+      "call": "neg",
+      "args": [],
+      "value": "-5"
+    },
+    {
+      "call": "neg0",
+      "args": [],
+      "value": "0"
+    },
+    {
+      "call": "mul",
+      "args": [],
+      "value": "24"
+    },
+    {
+      "call": "mul1",
+      "args": [],
+      "value": "7"
+    },
+    {
+      "call": "div",
+      "args": [],
+      "value": "2"
+    },
+    {
+      "call": "rec",
+      "args": [],
+      "value": "0.25"
+    },
+    {
+      "call": "mod",
+      "args": [],
+      "value": "1.5"
+    },
+    {
+      "call": "modneg",
+      "args": [],
+      "value": "-2"
+    },
+    {
+      "call": "modneg2",
+      "args": [],
+      "value": "2"
+    },
+    {
+      "call": "sub-str",
+      "args": [],
+      "error": "-: expected number, got string (in - ← in body ← in call to sub-str)"
+    },
+    {
+      "call": "mul-null",
+      "args": [],
+      "error": "*: expected number, got null (in * ← in body ← in call to mul-null)"
+    },
+    {
+      "call": "div-bool",
+      "args": [],
+      "error": "/: expected number, got boolean (in / ← in body ← in call to div-bool)"
+    },
+    {
+      "call": "mod-str",
+      "args": [],
+      "error": "%: expected number, got string (in % ← in body ← in call to mod-str)"
+    },
+    {
+      "call": "sub-list",
+      "args": [],
+      "error": "-: expected number, got list (in - ← in body ← in call to sub-list)"
+    },
+    {
+      "call": "div0",
+      "args": [],
+      "error": "/: division by zero (in / ← in body ← in call to div0)"
+    },
+    {
+      "call": "div-neg0",
+      "args": [],
+      "error": "/: division by zero (in / ← in body ← in call to div-neg0)"
+    },
+    {
+      "call": "rec0",
+      "args": [],
+      "error": "/: division by zero (in / ← in body ← in call to rec0)"
+    },
+    {
+      "call": "div0-later",
+      "args": [],
+      "error": "/: division by zero (in / ← in body ← in call to div0-later)"
+    },
+    {
+      "call": "mod0",
+      "args": [],
+      "error": "%: division by zero (in % ← in body ← in call to mod0)"
+    },
+    {
+      "call": "over",
+      "args": [],
+      "error": "*: non-finite result (in * ← in body ← in call to over)"
+    },
+    {
+      "call": "overplus",
+      "args": [],
+      "error": "+: non-finite result (in + ← in body ← in call to overplus)"
+    },
+    {
+      "call": "overminus",
+      "args": [],
+      "error": "-: non-finite result (in - ← in body ← in call to overminus)"
+    }
+  ]
+}

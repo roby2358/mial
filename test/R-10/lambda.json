@@ -1,0 +1,35 @@
+{
+  "libraries": [],
+  "checks": [
+    {
+      "call": "use-adder",
+      "args": [],
+      "value": "7"
+    },
+    {
+      "call": "not-dynamic",
+      "args": [],
+      "value": "1"
+    },
+    {
+      "call": "multi",
+      "args": [],
+      "value": "2"
+    },
+    {
+      "call": "zero",
+      "args": [],
+      "value": "9"
+    },
+    {
+      "call": "bad",
+      "args": [],
+      "error": "lambda: invalid parameter spec (in body ← in call to bad)"
+    },
+    {
+      "call": "empty-body",
+      "args": [],
+      "value": "null"
+    }
+  ]
+}

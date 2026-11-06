@@ -1,0 +1,14 @@
+{
+  "libraries": [],
+  "parsed": [
+    "(t (a 1))",
+    "(u 2)"
+  ],
+  "checks": [
+    {
+      "call": "u",
+      "args": [],
+      "value": "2"
+    }
+  ]
+}

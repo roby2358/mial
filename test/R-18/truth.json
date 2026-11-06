@@ -1,0 +1,184 @@
+{
+  "libraries": [],
+  "checks": [
+    {
+      "call": "t",
+      "args": [
+        false
+      ],
+      "value": "\"no\""
+    },
+    {
+      "call": "t",
+      "args": [
+        null
+      ],
+      "value": "\"no\""
+    },
+    {
+      "call": "t",
+      "args": [
+        0
+      ],
+      "value": "\"no\""
+    },
+    {
+      "call": "t",
+      "args": [
+        true
+      ],
+      "value": "\"yes\""
+    },
+    {
+      "call": "t",
+      "args": [
+        1
+      ],
+      "value": "\"yes\""
+    },
+    {
+      "call": "t",
+      "args": [
+        ""
+      ],
+      "value": "\"yes\""
+    },
+    {
+      "call": "t",
+      "args": [
+        "false"
+      ],
+      "value": "\"yes\""
+    },
+    {
+      "call": "t",
+      "args": [
+        [
+          0
+        ]
+      ],
+      "value": "\"yes\""
+    },
+    {
+      "call": "t",
+      "args": [
+        []
+      ],
+      "value": "\"no\""
+    },
+    {
+      "call": "t",
+      "args": [
+        {
+          "a": 1
+        }
+      ],
+      "value": "\"yes\""
+    },
+    {
+      "call": "t-fn",
+      "args": [],
+      "value": "\"yes\""
+    },
+    {
+      "call": "t-sym",
+      "args": [],
+      "value": "\"yes\""
+    },
+    {
+      "call": "t-tree-false",
+      "args": [],
+      "value": "\"yes\""
+    },
+    {
+      "call": "not1",
+      "args": [
+        0
+      ],
+      "value": "true"
+    },
+    {
+      "call": "not1",
+      "args": [
+        ""
+      ],
+      "value": "false"
+    },
+    {
+      "call": "nul",
+      "args": [
+        null
+      ],
+      "value": "true"
+    },
+    {
+      "call": "nul",
+      "args": [
+        []
+      ],
+      "value": "true"
+    },
+    {
+      "call": "nul",
+      "args": [
+        0
+      ],
+      "value": "false"
+    },
+    {
+      "call": "nul",
+      "args": [
+        [
+          null
+        ]
+      ],
+      "value": "false"
+    },
+    {
+      "call": "atm",
+      "args": [
+        1
+      ],
+      "value": "true"
+    },
+    {
+      "call": "atm",
+      "args": [
+        null
+      ],
+      "value": "true"
+    },
+    {
+      "call": "atm",
+      "args": [
+        [
+          1
+        ]
+      ],
+      "value": "false"
+    },
+    {
+      "call": "lst",
+      "args": [
+        [
+          1
+        ]
+      ],
+      "value": "true"
+    },
+    {
+      "call": "lst",
+      "args": [
+        []
+      ],
+      "value": "false"
+    },
+    {
+      "call": "lst",
+      "args": [
+        1
+      ],
+      "value": "false"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "libraries": [],
+  "diagnostics": [
+    "line 8: indentation of 3 space(s) is not a multiple of 2 — rounded down to level 1"
+  ],
+  "parsed": [
+    "(t (a (b c) d) (e f (g h)) (i 1 j))",
+    "(twice (star kid))"
+  ]
+}

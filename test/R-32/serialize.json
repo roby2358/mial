@@ -1,0 +1,120 @@
+{
+  "libraries": [
+    "host"
+  ],
+  "checks": [
+    {
+      "call": "n",
+      "args": [],
+      "serialized": "{\"value\":1.5,\"children\":[]}"
+    },
+    {
+      "call": "big",
+      "args": [],
+      "serialized": "{\"value\":1e+21,\"children\":[]}"
+    },
+    {
+      "call": "s",
+      "args": [],
+      "serialized": "{\"value\":{\"string\":\"a\\tb é 🫐 \\\\ q\"},\"children\":[]}"
+    },
+    {
+      "call": "t",
+      "args": [],
+      "serialized": "{\"value\":true,\"children\":[]}"
+    },
+    {
+      "call": "nul",
+      "args": [],
+      "serialized": "{\"value\":null,\"children\":[]}"
+    },
+    {
+      "call": "sym",
+      "args": [],
+      "serialized": "{\"value\":\"foo\",\"children\":[]}"
+    },
+    {
+      "call": "tree",
+      "args": [],
+      "serialized": "{\"value\":\"+\",\"children\":[{\"value\":1,\"children\":[]},{\"value\":{\"string\":\"s\"},\"children\":[]}]}"
+    },
+    {
+      "call": "fn",
+      "args": [],
+      "serialized": "{\"value\":\"<lambda>\",\"children\":[]}"
+    },
+    {
+      "call": "bi",
+      "args": [],
+      "serialized": "{\"value\":null,\"children\":[{\"value\":\"+\",\"children\":[]}]}"
+    },
+    {
+      "call": "ctl",
+      "args": [],
+      "serialized": "{\"value\":{\"string\":\"a\\nb\"},\"children\":[]}"
+    },
+    {
+      "call": "quoted",
+      "args": [],
+      "serialized": "{\"value\":{\"string\":\"he said \\\"hi\\\"\"},\"children\":[]}"
+    },
+    {
+      "deserialize": "{\"value\":\"+\",\"children\":[{\"value\":1,\"children\":[]},{\"value\":{\"string\":\"s\"},\"children\":[]}]}",
+      "value": "(+ 1 \"s\")",
+      "serialized": "{\"value\":\"+\",\"children\":[{\"value\":1,\"children\":[]},{\"value\":{\"string\":\"s\"},\"children\":[]}]}"
+    },
+    {
+      "deserialize": " { \"children\" : [ ] , \"value\" : 2.50 } ",
+      "value": "2.5",
+      "serialized": "{\"value\":2.5,\"children\":[]}"
+    },
+    {
+      "deserialize": "{\"value\":{\"error\":\"x: y\"},\"children\":[]}",
+      "value": "<error: x: y>"
+    },
+    {
+      "deserialize": "not json",
+      "error": "not a serialized node"
+    },
+    {
+      "deserialize": "5",
+      "error": "not a serialized node"
+    },
+    {
+      "deserialize": "{\"value\":1}",
+      "error": "not a serialized node"
+    },
+    {
+      "deserialize": "{\"children\":[]}",
+      "error": "not a serialized node"
+    },
+    {
+      "deserialize": "{\"value\":[1],\"children\":[]}",
+      "error": "not a serialized node"
+    },
+    {
+      "deserialize": "{\"value\":{\"x\":1},\"children\":[]}",
+      "error": "not a serialized node"
+    },
+    {
+      "deserialize": "{\"value\":1e999,\"children\":[]}",
+      "error": "not a serialized node"
+    },
+    {
+      "deserialize": "{\"value\":1,\"children\":[5]}",
+      "error": "not a serialized node"
+    },
+    {
+      "deserialize": "{\"value\":1,\"children\":{}}",
+      "error": "not a serialized node"
+    },
+    {
+      "deserialize": "[]",
+      "error": "not a serialized node"
+    },
+    {
+      "deserialize": "null",
+      "error": "not a serialized node"
+    }
+  ]
+}

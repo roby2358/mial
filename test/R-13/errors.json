@@ -1,0 +1,42 @@
+{
+  "libraries": [],
+  "depthLimit": 100,
+  "checks": [
+    {
+      "call": "outer",
+      "args": [
+        1
+      ],
+      "error": "+: expected number or string, got boolean (in + ← in body ← in call to inner ← in body ← in call to outer)"
+    },
+    {
+      "call": "caught",
+      "args": [],
+      "value": "true"
+    },
+    {
+      "call": "not-caught",
+      "args": [],
+      "value": "false"
+    },
+    {
+      "call": "trace-arg",
+      "args": [],
+      "error": "nosuch: undefined symbol (in argument to + ← in body ← in call to trace-arg)"
+    },
+    {
+      "call": "loop",
+      "args": [
+        1
+      ],
+      "error": "\"# loop\" recursed too deeply (depth limit 100)"
+    },
+    {
+      "call": "spin",
+      "args": [
+        1
+      ],
+      "error": "\"# spin\" recursed too deeply (depth limit 100)"
+    }
+  ]
+}
